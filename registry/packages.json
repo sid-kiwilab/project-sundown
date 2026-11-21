@@ -1,0 +1,4 @@
+{
+  "$comment": "Manual overrides for known dead or sunset services.",
+  "overrides": []
+}
