@@ -17,4 +17,19 @@ describe("parseMarkdownDeprecationRow", () => {
       "| **Dec 1, 2026** | `gpt-image-1-mini` | Deprecated | `gpt-image-2.5-sunburst` |";
     expect(parseMarkdownDeprecationRow(repl, "gpt-image-2.5-sunburst")).toBeNull();
   });
+
+  it("parses Anthropic retirement history row", () => {
+    const row =
+      "| November 30, 2026 | `claude-sonnet-4-5-20250929` | `claude-sonnet-5-5` |";
+    const parsed = parseMarkdownDeprecationRow(row, "claude-sonnet-4-5-20250929");
+    expect(parsed?.shutdownDate).toBe("2026-11-30");
+    expect(parsed?.replacement).toBe("claude-sonnet-5-5");
+  });
+
+  it("parses Anthropic status table row", () => {
+    const row =
+      "| claude-sonnet-4-5-20250929 | Deprecated | September 30, 2026 | November 30, 2026 |";
+    const parsed = parseMarkdownDeprecationRow(row, "claude-sonnet-4-5-20250929");
+    expect(parsed?.shutdownDate).toBe("2026-11-30");
+  });
 });

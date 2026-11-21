@@ -208,7 +208,7 @@ See also `.env.example` and LIVE env table.
 
 ## Known gaps / risks (explicit)
 
-1. **Structured parse is OpenAI-table-shaped only** — Anthropic/Google still depend on LLM + gates.
+1. **Structured parse** — OpenAI + Anthropic pipe tables; Google/Mistral still mostly LLM + gates.
 2. **Lookup cap** (40) — huge model lists may skip tail items.
 3. **One deprecation URL per provider** — no per-model deep links.
 4. **Provider coverage** — only entries in `sources.json` / `saas.json`; many vendors absent.
@@ -216,7 +216,7 @@ See also `.env.example` and LIVE env table.
 6. **API host rows** — intentionally unchecked; do not inflate coverage.
 7. **Web scan** — public GitHub only; tarball failures without token.
 8. **Hosted product** — credits, caching, rate limits not built.
-9. **Monorepo** — workspace code may still be uncommitted on disk until SYNC/PUSH (see git status).
+9. **Root `lint`** — `tsc --noEmit` on web + engine (Next still runs ESLint on `npm run build:web`).
 
 ---
 

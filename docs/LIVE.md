@@ -221,7 +221,7 @@ Same engine as web; Tier 1 offline where possible; `--fail-on-days` for CI gates
 
 1. **engine** — fetch + detectors + Tier 1 + tests on fixtures. **(shipped)**
 2. **CLI** — table, `--json`, `--issue`, `--fail-on-days`, terminal alarm. **(shipped, workspace only)**
-3. **Tier 2** — OpenAI markdown table parse + batch LLM; Anthropic, Google, Mistral via fetch + LLM + quote gates (no vendor-specific table parser yet beyond OpenAI-shaped rows).
+3. **Tier 2** — OpenAI + **Anthropic** pipe-table parse + batch LLM; Google, Mistral via fetch + LLM + quote gates (no structured row parser for those yet).
 4. **Action** + npm publish + README GIF.
 5. **web** — landing, API, report, cache, credits, out-of-credits. **(partial: local landing + `/api/scan` + Tier 2 when keys set; no KV/credits/`/r/`)**
 6. OG + copy-as-issue.
@@ -286,8 +286,8 @@ npm test
 Owner verifies `http://localhost:3000` in the browser. Agents do not fetch localhost.
 
 ```bash
-npm run build
-npm run lint
+npm run build    # engine + CLI + web
+npm run lint     # tsc --noEmit on @sundown/engine and @sundown/web
 ```
 
 ---

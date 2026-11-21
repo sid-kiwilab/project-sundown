@@ -8,7 +8,8 @@
   "scripts": {
     "test": "npm run test -w @sundown/engine",
     "build": "npm run build:engine && npm run build:cli && npm run build:web",
-    "lint": "npm run lint:web",
+    "lint": "npm run lint:engine && npm run lint:web",
+    "lint:engine": "npm run lint -w @sundown/engine",
     "lint:web": "npm run lint -w @sundown/web",
     "build:engine": "npm run build -w @sundown/engine",
     "build:cli": "npm run build -w sundown-cli",

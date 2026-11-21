@@ -45,34 +45,103 @@ export function parseDisplayDateToIso(raw: string): string | undefined {
   return iso;
 }
 
-/** OpenAI-style markdown tables: model in affected column, “Deprecated” in status column. */
+function parseOpenAiDeprecationLine(
+  line: string,
+  modelId: string,
+): TableDeprecation | null {
+  if (!line.toLowerCase().includes("deprecated")) return null;
+  const ticked = `\`${modelId}\``;
+  if (!line.includes(ticked)) return null;
+  if (!quoteShowsModelDeprecated(line, modelId)) return null;
+
+  const quote = line.trim();
+  let shutdownDate: string | undefined;
+  const boldDate = line.match(/\*\*([^*]+)\*\*/);
+  if (boldDate) {
+    shutdownDate = parseDisplayDateToIso(boldDate[1]!);
+  }
+
+  const afterDeprecated = line.split(/deprecated/i)[1] ?? "";
+  const replMatch = afterDeprecated.match(/`([^`]+)`/);
+  const replacement = replMatch?.[1];
+
+  if (shutdownDate && !dateInQuote(quote, shutdownDate)) {
+    shutdownDate = undefined;
+  }
+
+  return { sourceQuote: quote, shutdownDate, replacement };
+}
+
+/** Anthropic history table: `| retirement date | `model` | `replacement` |` */
+function parseAnthropicRetirementLine(
+  line: string,
+  modelId: string,
+): TableDeprecation | null {
+  const m = line.match(
+    /^\|\s*([^|]+?)\s*\|\s*`([^`]+)`\s*\|\s*`([^`]+)`\s*\|/,
+  );
+  if (!m) return null;
+  if (m[2] !== modelId) return null;
+
+  const quote = line.trim();
+  const shutdownDate = parseDisplayDateToIso(m[1]!.trim());
+  const replacement = m[3];
+
+  if (shutdownDate && !dateInQuote(quote, shutdownDate)) {
+    return { sourceQuote: quote, replacement, shutdownDate: undefined };
+  }
+  return { sourceQuote: quote, shutdownDate, replacement };
+}
+
+/** Anthropic status table: model | Deprecated/Retired | … | tentative retirement date */
+function parseAnthropicStatusLine(
+  line: string,
+  modelId: string,
+): TableDeprecation | null {
+  const cells = line
+    .split("|")
+    .map((c) => c.trim())
+    .filter(Boolean);
+  if (cells.length < 3) return null;
+
+  const modelCell = cells[0]!.replace(/`/g, "");
+  if (modelCell !== modelId) return null;
+
+  const state = cells[1]!.toLowerCase();
+  if (!/^deprecated$|^retired$/.test(state)) return null;
+
+  const quote = line.trim();
+  const last = cells[cells.length - 1]!;
+  let shutdownDate = parseDisplayDateToIso(last.replace(/\*\*/g, ""));
+  if (!shutdownDate) {
+    for (const cell of cells.slice(2)) {
+      shutdownDate = parseDisplayDateToIso(cell.replace(/\*\*/g, ""));
+      if (shutdownDate) break;
+    }
+  }
+
+  if (shutdownDate && !dateInQuote(quote, shutdownDate)) {
+    return { sourceQuote: quote, shutdownDate: undefined };
+  }
+  return { sourceQuote: quote, shutdownDate };
+}
+
+/** Pipe-table rows (OpenAI deprecations, Anthropic model status / retirement history). */
 export function parseMarkdownDeprecationRow(
   pageText: string,
   modelId: string,
 ): TableDeprecation | null {
-  const ticked = `\`${modelId}\``;
   for (const line of pageText.split(/\r?\n/)) {
     if (!line.includes("|")) continue;
-    if (!line.toLowerCase().includes("deprecated")) continue;
-    if (!line.includes(ticked)) continue;
-    if (!quoteShowsModelDeprecated(line, modelId)) continue;
 
-    const quote = line.trim();
-    let shutdownDate: string | undefined;
-    const boldDate = line.match(/\*\*([^*]+)\*\*/);
-    if (boldDate) {
-      shutdownDate = parseDisplayDateToIso(boldDate[1]!);
-    }
+    const openAi = parseOpenAiDeprecationLine(line, modelId);
+    if (openAi) return openAi;
 
-    const afterDeprecated = line.split(/deprecated/i)[1] ?? "";
-    const replMatch = afterDeprecated.match(/`([^`]+)`/);
-    const replacement = replMatch?.[1];
+    const anthropicRet = parseAnthropicRetirementLine(line, modelId);
+    if (anthropicRet) return anthropicRet;
 
-    if (shutdownDate && !dateInQuote(quote, shutdownDate)) {
-      shutdownDate = undefined;
-    }
-
-    return { sourceQuote: quote, shutdownDate, replacement };
+    const anthropicStatus = parseAnthropicStatusLine(line, modelId);
+    if (anthropicStatus) return anthropicStatus;
   }
   return null;
 }

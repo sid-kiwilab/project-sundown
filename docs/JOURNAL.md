@@ -4,13 +4,20 @@ Newest first. Stable ops + product spec: [LIVE.md](LIVE.md).
 
 ---
 
-## 2026-11-21 — Coverage + Tier 2 honesty (REVIEW → FIX → SYNC)
+## 2026-11-21 — Anthropic pipe-table parse + lint (FIX → SYNC)
+
+- **Shipped:** `parseMarkdownDeprecationRow` handles **Anthropic** retirement-history and status tables (same Tier 2 path as OpenAI); root **`npm run lint`** = `tsc --noEmit` on **engine + web** (`next build` still typechecks/lints web for prod).
+- **Tests:** **19** Vitest (`deprecations-table` Anthropic cases).
+- **Key files:** `packages/engine/src/readers/deprecations-table.ts`, root `package.json`, `packages/engine/package.json`
+- **Gaps:** Google/Mistral structured rows; Tier 3; push commit after REVIEW.
+
+## 2026-11-21 — Coverage + Tier 2 honesty (REVIEW → FIX → SYNC → PUSH `9fee531`)
 
 - **Shipped:** `Finding.checked` / `checkSource` / `uncheckedReason`; report `coverageLine`, `meta.coverage`, `tier2Errors`, `standBehindLine`; Tier 2 windowed text + **one batch LLM per provider page**; OpenAI **`deprecations-table`** markdown parser; `registry/eol.json`, `registry/saas.json`; web report **list** layout (no horizontal scroll); root `.env` via `apps/web/lib/root-dotenv.ts`; CLI coverage column.
 - **Honesty FIX:** Tier 1 no longer marks **`api` hostnames** as checked — deprecations stay on **model** rows; footer copy matches coverage math.
-- **Proof:** Vitest `fixtures/gpt-image-2` → **2027-02-10** (LIVE Tier 2 done-when demo); `npm test` (**17** tests).
+- **Proof:** Vitest `fixtures/gpt-image-2` → **2027-02-10** (LIVE Tier 2 done-when demo); `npm test` (now **19** with later table tests).
 - **Key files:** `packages/engine/src/coverage.ts`, `resolvers/tier2.ts`, `readers/deprecations-table.ts`, `apps/web/components/report-view.tsx`, `docs/STATUS-FOR-REVIEW.md`
-- **Gaps:** Anthropic/Google structured parsers; Tier 3 search; hosted credits/`/r/`; monorepo still to **commit on PUSH**; README screenshot.
+- **Gaps:** Google/Mistral structured parsers; Tier 3 search; hosted credits/`/r/`; README screenshot.
 
 ## 2026-11-21 — Web UI (local) + start.bat
 
