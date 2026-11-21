@@ -17,13 +17,14 @@ Local dev: [README.md](../README.md). Session history: [JOURNAL.md](JOURNAL.md).
 | Product | Open-source repo + npm CLI + optional GitHub Action + Vercel demo (public repo paste) |
 | Stack | Monorepo: `packages/engine` (pure TS), `packages/cli`, `apps/web` (Next.js App Router, Tailwind); Upstash Redis on hosted site |
 | App root | `apps/web/` |
-| Dev | *Pending scaffold* — `npm run dev` from `apps/web` or root workspace script |
-| CLI | *Pending* — `npx sundown-cli [path]` |
+| Dev (web) | **Shipped (local)** — `start.bat` or `npm run dev` → **http://localhost:3000**; paste public `github.com/owner/repo` |
+| CLI (local) | **Shipped (workspace)** — `@sundown/engine` + `sundown-cli`; `npm run build:engine && npm run build:cli` then `npm run sundown -- [path]` |
+| CLI (npm) | *Pending publish* — `npx sundown-cli` after `npm publish` on `sundown-cli` |
 | Backend (hosted) | Scan API, credits, cache — Vercel + KV |
 | Env (hosted) | `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` (optional), `KV_*`, `ADMIN_SECRET`, `CONTACT_URL`, optional `GITHUB_TOKEN` (archived-repo limits) |
 | Env (CLI) | User’s `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` for Tier 2/3; `GITHUB_TOKEN` for `--issue` |
 | Production URL | Unset |
-| Accent | Alarm red (TBD in `apps/web` — dark UI, big type) |
+| Accent | Alarm red — dark UI in `apps/web` (landing + inline report) |
 | License | MIT |
 
 ### Git (this repo only)
@@ -73,6 +74,10 @@ Agent harness in [`harness/`](../harness/) — ported from **siddharth_venkatesh
 
 ## Hosted scan flow
 
+**Local dev (shipped):** steps 4–7 via `POST /api/scan` on one response — Tier 2 when `OPENROUTER_API_KEY` / OpenAI / Anthropic keys in repo-root `.env` (`ensureMonorepoEnv`); no credits/cache/`scanId` yet.
+
+**Hosted (target):**
+
 1. User pastes `github.com/owner/repo` (optional branch/subpath).
 2. Server checks credits + rate limit → out-of-credits page if exhausted.
 3. Cache key `owner/repo@commitSha` — hit returns instantly, zero cost.
@@ -101,7 +106,7 @@ Each detector returns `{ kind, name, version?, file, line, raw }`.
 **Tier 1 — free, deterministic**
 
 - Runtimes/images: [endoflife.date](https://endoflife.date) API.
-- npm `deprecated` field per version.
+- npm `deprecated` field **for the declared version only** (exact pin; no `latest` / sibling-version inference).
 - PyPI yanked / inactive signals.
 - GitHub `archived` on dependency repos (cached; optional token).
 - Actions: archived actions, deprecated Node on runner.
@@ -135,9 +140,12 @@ type Finding = {
   replacement?: string
   sourceUrl?: string
   sourceQuote?: string
-  confidence: 'official-data' | 'official-page' | 'llm-read'
+  confidence: 'official-data' | 'official-page' | 'llm-read' | 'unverified'
 }
 ```
+
+- **`unverified`** — Tier 1 did not check or found no official notice (`no_notice_found`). Never imply safety.
+- **`official-data`** — Tier 1 registry/API/override with `sourceUrl` and/or `sourceQuote` (including `registry/packages.json` overrides with `note`).
 
 ---
 
@@ -173,9 +181,9 @@ LLM calls decrement by real token cost. Pre-check credits; mid-scan exhaustion �
 
 ## Web UI
 
-- Landing: paste public GitHub repo; dark + alarm-red accent.
-- Loading: progress (“Downloading repo”, “Found N dependencies”, …) via SSE or polling.
-- Report: `/r/<owner>/<repo>` shareable.
+- Landing: paste public GitHub repo; dark + alarm-red accent. **(local: shipped)**
+- Loading: progress (“Downloading repo”, “Found N dependencies”, …) via SSE or polling. **(local: stepped client copy only)**
+- Report: `/r/<owner>/<repo>` shareable. **(not yet — inline results on `/` only)**
 - OG: repo name, countdown, “X of Y on borrowed time”.
 - Mobile-friendly; no accounts.
 
@@ -183,8 +191,8 @@ LLM calls decrement by real token cost. Pre-check credits; mid-scan exhaustion �
 
 ## API
 
-- `POST /api/scan { repoUrl }` → `{ scanId }`
-- `GET /api/scan/:id` or SSE → report JSON
+- **Local (shipped):** `POST /api/scan { repoUrl }` → full report JSON (+ `repo` slug). Public `github.com` only; tarball cap 50MB.
+- **Hosted (target):** `POST /api/scan { repoUrl }` → `{ scanId }`; `GET /api/scan/:id` or SSE → report JSON.
 - Validate: `github.com` only; never execute repo code.
 
 ---
@@ -211,11 +219,11 @@ Same engine as web; Tier 1 offline where possible; `--fail-on-days` for CI gates
 
 ## Build order
 
-1. **engine** — fetch + detectors + Tier 1 + tests on fixtures.
-2. **CLI** — table, `--json`, `--issue`, `--fail-on-days`, terminal alarm.
-3. **Tier 2** — OpenAI, Anthropic, Google pages + quote check.
+1. **engine** — fetch + detectors + Tier 1 + tests on fixtures. **(shipped)**
+2. **CLI** — table, `--json`, `--issue`, `--fail-on-days`, terminal alarm. **(shipped, workspace only)**
+3. **Tier 2** — OpenAI markdown table parse + batch LLM; Anthropic, Google, Mistral via fetch + LLM + quote gates (no vendor-specific table parser yet beyond OpenAI-shaped rows).
 4. **Action** + npm publish + README GIF.
-5. **web** — landing, API, report, cache, credits, out-of-credits.
+5. **web** — landing, API, report, cache, credits, out-of-credits. **(partial: local landing + `/api/scan` + Tier 2 when keys set; no KV/credits/`/r/`)**
 6. OG + copy-as-issue.
 7. **Tier 3** + demo scan aliasengine for launch.
 
@@ -223,10 +231,11 @@ Same engine as web; Tier 1 offline where possible; `--fail-on-days` for CI gates
 
 ## Done when
 
-- [ ] `npx sundown-cli .` on a fresh machine **without** a key prints a useful report (Tier 1).
-- [ ] aliasengine scan flags **gpt-image-2** → **2027-02-10**, replacement, OpenAI source link.
-- [ ] Old Node + deprecated npm package both show `official-data` confidence.
-- [ ] Credits at zero → friendly page, no stack trace.
+- [x] **Tier 1 (local workspace):** `npm run sundown -- .` with **no** API keys prints a useful report (live npm/eol checks). `npx sundown-cli` awaits npm publish + one-shot build story.
+- [x] **Tier 2 demo:** Vitest `packages/engine` fixture `fixtures/gpt-image-2` + mocked OpenAI deprecations table flags **gpt-image-2** → **2027-02-10**, replacement, source link (live `aliasengine` scan optional after publish).
+- [x] Old Node + deprecated npm package both show `official-data` (Vitest fixtures + mocked HTTP).
+- [ ] Credits at zero → friendly page, no stack trace (hosted).
+- [x] **Web (local):** paste public GitHub URL at `localhost:3000`, report in browser (`start.bat` / `npm run dev`; Tier 2 when keys in root `.env`).
 - [ ] Public README with report screenshot + two-line origin story.
 
 ---
@@ -240,7 +249,9 @@ Same engine as web; Tier 1 offline where possible; `--fail-on-days` for CI gates
 | `apps/web/app/*` | Next.js routes + API |
 | `registry/*.json` | Seeds and overrides |
 | `harness/*` | V2 agent kit |
-| [`.env.example`](../.env.example) | *Pending* — hosted + CLI placeholders |
+| [`.env.example`](../.env.example) | CLI + optional `REGISTRY_PATH`, `GITHUB_TOKEN` for web scans |
+| [start.bat](../start.bat) | Windows: install if needed, build engine, `next dev` on `apps/web` |
+| [scripts/dev.mjs](../scripts/dev.mjs) | `npm run dev` → build engine + `@sundown/web` |
 | [docs/JOURNAL.md](JOURNAL.md) | Session log |
 
 ---
@@ -254,21 +265,22 @@ Same engine as web; Tier 1 offline where possible; `--fail-on-days` for CI gates
 | `KV_*` | Hosted | Vercel | Credits, rate limit, cache |
 | `ADMIN_SECRET` | Hosted | Vercel | Top-up route |
 | `CONTACT_URL` | Hosted | Vercel | Out-of-credits CTA |
-| `GITHUB_TOKEN` | No | CLI / server | `--issue`, archived checks |
+| `GITHUB_TOKEN` | No | CLI / web API | `--issue`, archived checks; higher GitHub API limits for tarball/default branch |
+| `OPENROUTER_API_KEY` | No | CLI / web | Tier 2 reader (preferred OpenAI-compatible) |
+| `SUNDOWN_LLM_MODEL` | No | CLI / web | Optional model slug (default `openai/gpt-4o-mini` on OpenRouter) |
+| `REGISTRY_PATH` | No | Web (Vercel) | Override monorepo `registry/` (default: resolved from `apps/web` layout) |
+| `NEXT_PUBLIC_CONTACT_URL` | No | Web | “Interested in monitoring?” CTA on landing |
 
 ---
 
 ## Local testing
 
-*After monorepo scaffold:*
-
 ```bash
 cd c:\flutter_apps\project_sundown
 npm install
-npm run build -w @sundown/engine   # or root script TBD
-npx sundown-cli .
-# apps/web:
-npm run dev -w @sundown/web
+npm run dev              # or start.bat (Windows) → http://localhost:3000
+npm run build:engine && npm run build:cli && npm run sundown -- .
+npm test
 ```
 
 Owner verifies `http://localhost:3000` in the browser. Agents do not fetch localhost.

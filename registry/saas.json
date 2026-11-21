@@ -1,0 +1,399 @@
+{
+  "$comment": "Hand-seeded SaaS vendors. PRs welcome — one changelog URL per vendor.",
+  "vendors": [
+    {
+      "id": "openai",
+      "name": "OpenAI",
+      "envPrefixes": ["OPENAI_"],
+      "envKeys": ["OPENAI_API_KEY", "OPENAI_ORG_ID"],
+      "hosts": ["api.openai.com"],
+      "sdks": ["openai"],
+      "urls": ["https://platform.openai.com/docs/deprecations.md"]
+    },
+    {
+      "id": "anthropic",
+      "name": "Anthropic",
+      "envPrefixes": ["ANTHROPIC_"],
+      "hosts": ["api.anthropic.com"],
+      "sdks": ["@anthropic-ai/sdk"],
+      "urls": ["https://docs.anthropic.com/en/docs/about-claude/model-deprecations"]
+    },
+    {
+      "id": "google-ai",
+      "name": "Google AI",
+      "envPrefixes": ["GOOGLE_", "GEMINI_"],
+      "hosts": ["generativelanguage.googleapis.com"],
+      "sdks": ["@google/generative-ai", "@google-cloud/aiplatform"],
+      "urls": ["https://ai.google.dev/gemini-api/docs/changelog"]
+    },
+    {
+      "id": "stripe",
+      "name": "Stripe",
+      "envPrefixes": ["STRIPE_"],
+      "hosts": ["api.stripe.com"],
+      "sdks": ["stripe"],
+      "urls": ["https://docs.stripe.com/changelog"]
+    },
+    {
+      "id": "twilio",
+      "name": "Twilio",
+      "envPrefixes": ["TWILIO_"],
+      "hosts": ["api.twilio.com"],
+      "sdks": ["twilio"],
+      "urls": ["https://www.twilio.com/changelog"]
+    },
+    {
+      "id": "sendgrid",
+      "name": "SendGrid",
+      "envPrefixes": ["SENDGRID_"],
+      "hosts": ["api.sendgrid.com"],
+      "sdks": ["@sendgrid/mail"],
+      "urls": ["https://docs.sendgrid.com/for-developers/sending-email/api-updates"]
+    },
+    {
+      "id": "mailgun",
+      "name": "Mailgun",
+      "envPrefixes": ["MAILGUN_"],
+      "hosts": ["api.mailgun.net"],
+      "urls": ["https://documentation.mailgun.com/docs/mailgun/changelog"]
+    },
+    {
+      "id": "postmark",
+      "name": "Postmark",
+      "envPrefixes": ["POSTMARK_"],
+      "hosts": ["api.postmarkapp.com"],
+      "urls": ["https://postmarkapp.com/updates"]
+    },
+    {
+      "id": "resend",
+      "name": "Resend",
+      "envPrefixes": ["RESEND_"],
+      "hosts": ["api.resend.com"],
+      "sdks": ["resend"],
+      "urls": ["https://resend.com/changelog"]
+    },
+    {
+      "id": "firebase",
+      "name": "Firebase",
+      "envPrefixes": ["FIREBASE_"],
+      "sdks": ["firebase", "firebase-admin"],
+      "urls": ["https://firebase.google.com/support/release-notes/js"]
+    },
+    {
+      "id": "supabase",
+      "name": "Supabase",
+      "envPrefixes": ["SUPABASE_"],
+      "hosts": ["api.supabase.com", ".supabase.co"],
+      "sdks": ["@supabase/supabase-js"],
+      "urls": ["https://supabase.com/changelog"]
+    },
+    {
+      "id": "vercel",
+      "name": "Vercel",
+      "envPrefixes": ["VERCEL_"],
+      "hosts": ["vercel.com", "api.vercel.com"],
+      "urls": ["https://vercel.com/changelog"]
+    },
+    {
+      "id": "netlify",
+      "name": "Netlify",
+      "envPrefixes": ["NETLIFY_"],
+      "hosts": ["api.netlify.com"],
+      "urls": ["https://www.netlify.com/changelog/"]
+    },
+    {
+      "id": "cloudflare",
+      "name": "Cloudflare",
+      "envPrefixes": ["CLOUDFLARE_"],
+      "hosts": ["api.cloudflare.com"],
+      "urls": ["https://developers.cloudflare.com/changelog/"]
+    },
+    {
+      "id": "aws",
+      "name": "AWS",
+      "envPrefixes": ["AWS_"],
+      "urls": ["https://aws.amazon.com/about-aws/whats-new/"]
+    },
+    {
+      "id": "azure",
+      "name": "Azure",
+      "envPrefixes": ["AZURE_"],
+      "urls": ["https://azure.microsoft.com/en-us/updates"]
+    },
+    {
+      "id": "gcp",
+      "name": "Google Cloud",
+      "envPrefixes": ["GCP_", "GOOGLE_CLOUD_"],
+      "urls": ["https://cloud.google.com/release-notes"]
+    },
+    {
+      "id": "slack",
+      "name": "Slack",
+      "envPrefixes": ["SLACK_"],
+      "hosts": ["slack.com/api"],
+      "sdks": ["@slack/web-api"],
+      "urls": ["https://api.slack.com/changelog"]
+    },
+    {
+      "id": "discord",
+      "name": "Discord",
+      "envPrefixes": ["DISCORD_"],
+      "hosts": ["discord.com/api"],
+      "urls": ["https://discord.com/developers/docs/change-log"]
+    },
+    {
+      "id": "github",
+      "name": "GitHub",
+      "envPrefixes": ["GITHUB_"],
+      "hosts": ["api.github.com"],
+      "urls": ["https://github.blog/changelog/"]
+    },
+    {
+      "id": "gitlab",
+      "name": "GitLab",
+      "envPrefixes": ["GITLAB_"],
+      "hosts": ["gitlab.com/api"],
+      "urls": ["https://about.gitlab.com/releases/"]
+    },
+    {
+      "id": "linear",
+      "name": "Linear",
+      "envPrefixes": ["LINEAR_"],
+      "hosts": ["api.linear.app"],
+      "urls": ["https://linear.app/changelog"]
+    },
+    {
+      "id": "notion",
+      "name": "Notion",
+      "envPrefixes": ["NOTION_"],
+      "hosts": ["api.notion.com"],
+      "urls": ["https://developers.notion.com/page/changelog"]
+    },
+    {
+      "id": "airtable",
+      "name": "Airtable",
+      "envPrefixes": ["AIRTABLE_"],
+      "hosts": ["api.airtable.com"],
+      "urls": ["https://support.airtable.com/docs/product-updates"]
+    },
+    {
+      "id": "hubspot",
+      "name": "HubSpot",
+      "envPrefixes": ["HUBSPOT_"],
+      "hosts": ["api.hubapi.com"],
+      "urls": ["https://developers.hubspot.com/changelog"]
+    },
+    {
+      "id": "salesforce",
+      "name": "Salesforce",
+      "envPrefixes": ["SALESFORCE_"],
+      "urls": ["https://help.salesforce.com/s/articleView?id=release-notes"]
+    },
+    {
+      "id": "intercom",
+      "name": "Intercom",
+      "envPrefixes": ["INTERCOM_"],
+      "hosts": ["api.intercom.io"],
+      "urls": ["https://www.intercom.com/changelog"]
+    },
+    {
+      "id": "zendesk",
+      "name": "Zendesk",
+      "envPrefixes": ["ZENDESK_"],
+      "hosts": ["api.zendesk.com"],
+      "urls": ["https://developer.zendesk.com/api-reference/introduction/release-notes/"]
+    },
+    {
+      "id": "shopify",
+      "name": "Shopify",
+      "envPrefixes": ["SHOPIFY_"],
+      "hosts": ["myshopify.com", "api.shopify.com"],
+      "urls": ["https://shopify.dev/changelog"]
+    },
+    {
+      "id": "paddle",
+      "name": "Paddle",
+      "envPrefixes": ["PADDLE_"],
+      "hosts": ["api.paddle.com"],
+      "urls": ["https://developer.paddle.com/changelog/overview"]
+    },
+    {
+      "id": "plaid",
+      "name": "Plaid",
+      "envPrefixes": ["PLAID_"],
+      "hosts": ["api.plaid.com"],
+      "sdks": ["plaid"],
+      "urls": ["https://plaid.com/docs/changelog/"]
+    },
+    {
+      "id": "brex",
+      "name": "Brex",
+      "envPrefixes": ["BREX_"],
+      "urls": ["https://developer.brex.com/docs/changelog/"]
+    },
+    {
+      "id": "sentry",
+      "name": "Sentry",
+      "envPrefixes": ["SENTRY_"],
+      "hosts": ["sentry.io"],
+      "sdks": ["@sentry/node"],
+      "urls": ["https://docs.sentry.io/product/releases/"]
+    },
+    {
+      "id": "datadog",
+      "name": "Datadog",
+      "envPrefixes": ["DD_", "DATADOG_"],
+      "urls": ["https://app.datadoghq.com/release-notes"]
+    },
+    {
+      "id": "new-relic",
+      "name": "New Relic",
+      "envPrefixes": ["NEW_RELIC_"],
+      "urls": ["https://docs.newrelic.com/docs/release-notes/"]
+    },
+    {
+      "id": "pagerduty",
+      "name": "PagerDuty",
+      "envPrefixes": ["PAGERDUTY_"],
+      "hosts": ["api.pagerduty.com"],
+      "urls": ["https://developer.pagerduty.com/changelog"]
+    },
+    {
+      "id": "okta",
+      "name": "Okta",
+      "envPrefixes": ["OKTA_"],
+      "hosts": ["okta.com"],
+      "urls": ["https://help.okta.com/en-us/content/topics/releasenotes/okta-relnotes.htm"]
+    },
+    {
+      "id": "auth0",
+      "name": "Auth0",
+      "envPrefixes": ["AUTH0_"],
+      "hosts": ["auth0.com"],
+      "urls": ["https://auth0.com/changelog"]
+    },
+    {
+      "id": "clerk",
+      "name": "Clerk",
+      "envPrefixes": ["CLERK_"],
+      "hosts": ["api.clerk.com"],
+      "urls": ["https://clerk.com/changelog"]
+    },
+    {
+      "id": "launchdarkly",
+      "name": "LaunchDarkly",
+      "envPrefixes": ["LAUNCHDARKLY_"],
+      "urls": ["https://docs.launchdarkly.com/home/changelog"]
+    },
+    {
+      "id": "segment",
+      "name": "Segment",
+      "envPrefixes": ["SEGMENT_"],
+      "hosts": ["api.segment.io"],
+      "urls": ["https://segment.com/docs/connections/sources/catalog/libraries/server/node/changelog/"]
+    },
+    {
+      "id": "mixpanel",
+      "name": "Mixpanel",
+      "envPrefixes": ["MIXPANEL_"],
+      "urls": ["https://docs.mixpanel.com/changelogs"]
+    },
+    {
+      "id": "amplitude",
+      "name": "Amplitude",
+      "envPrefixes": ["AMPLITUDE_"],
+      "urls": ["https://amplitude.com/docs/changelog"]
+    },
+    {
+      "id": "algolia",
+      "name": "Algolia",
+      "envPrefixes": ["ALGOLIA_"],
+      "hosts": ["algolia.net"],
+      "urls": ["https://www.algolia.com/doc/changes/"]
+    },
+    {
+      "id": "mapbox",
+      "name": "Mapbox",
+      "envPrefixes": ["MAPBOX_"],
+      "hosts": ["api.mapbox.com"],
+      "urls": ["https://docs.mapbox.com/help/release-notes/"]
+    },
+    {
+      "id": "openrouter",
+      "name": "OpenRouter",
+      "envPrefixes": ["OPENROUTER_"],
+      "hosts": ["openrouter.ai"],
+      "urls": ["https://openrouter.ai/docs/api-reference/overview"]
+    },
+    {
+      "id": "cohere",
+      "name": "Cohere",
+      "envPrefixes": ["COHERE_"],
+      "hosts": ["api.cohere.com"],
+      "urls": ["https://docs.cohere.com/changelog"]
+    },
+    {
+      "id": "huggingface",
+      "name": "Hugging Face",
+      "envPrefixes": ["HF_", "HUGGINGFACE_"],
+      "hosts": ["api-inference.huggingface.co"],
+      "urls": ["https://huggingface.co/changelog"]
+    },
+    {
+      "id": "replicate",
+      "name": "Replicate",
+      "envPrefixes": ["REPLICATE_"],
+      "hosts": ["api.replicate.com"],
+      "urls": ["https://replicate.com/docs/changelog"]
+    },
+    {
+      "id": "neon",
+      "name": "Neon",
+      "envPrefixes": ["NEON_"],
+      "hosts": ["neon.tech"],
+      "urls": ["https://neon.tech/changelog"]
+    },
+    {
+      "id": "planetscale",
+      "name": "PlanetScale",
+      "envPrefixes": ["PLANETSCALE_"],
+      "hosts": ["api.planetscale.com"],
+      "urls": ["https://planetscale.com/docs/changelog"]
+    },
+    {
+      "id": "upstash",
+      "name": "Upstash",
+      "envPrefixes": ["UPSTASH_", "KV_"],
+      "hosts": ["upstash.io"],
+      "urls": ["https://upstash.com/docs/changelog/overview"]
+    },
+    {
+      "id": "render",
+      "name": "Render",
+      "envPrefixes": ["RENDER_"],
+      "hosts": ["api.render.com"],
+      "urls": ["https://render.com/changelog"]
+    },
+    {
+      "id": "railway",
+      "name": "Railway",
+      "envPrefixes": ["RAILWAY_"],
+      "hosts": ["railway.app"],
+      "urls": ["https://railway.app/changelog"]
+    },
+    {
+      "id": "fly",
+      "name": "Fly.io",
+      "envPrefixes": ["FLY_"],
+      "hosts": ["fly.io"],
+      "urls": ["https://fly.io/changelog/"]
+    },
+    {
+      "id": "heroku",
+      "name": "Heroku",
+      "envPrefixes": ["HEROKU_"],
+      "hosts": ["heroku.com"],
+      "urls": ["https://devcenter.heroku.com/changelog"]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "sundown-cli",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "sundown": "./dist/bin.js",
+    "sundown-cli": "./dist/bin.js"
+  },
+  "main": "./dist/bin.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@sundown/engine": "0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.2"
+  }
+}

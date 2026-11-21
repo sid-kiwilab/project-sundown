@@ -1,4 +1,25 @@
 {
-  "$comment": "Seed model ID patterns by provider. PRs welcome.",
-  "providers": []
+  "$comment": "Seed model ID patterns by provider. PRs welcome. No shutdown dates here.",
+  "providers": [
+    {
+      "provider": "openai",
+      "patterns": ["gpt-[0-9a-z.-]+", "o[13]-[a-z0-9.-]+", "text-embedding-[a-z0-9.-]+", "gpt-image-[a-z0-9.-]+", "dall-e-[0-9]"]
+    },
+    {
+      "provider": "anthropic",
+      "patterns": ["claude-[0-9a-z.-]+"]
+    },
+    {
+      "provider": "google",
+      "patterns": ["gemini-[0-9a-z.-]+"]
+    },
+    {
+      "provider": "meta",
+      "patterns": ["llama-[0-9a-z.-]+"]
+    },
+    {
+      "provider": "mistral",
+      "patterns": ["mistral-[a-z0-9.-]+", "codestral-[a-z0-9.-]+"]
+    }
+  ]
 }

@@ -1,0 +1,45 @@
+{
+  "$comment": "Maps detector names to endoflife.date product slugs",
+  "runtimes": {
+    "node": "nodejs",
+    "python": "python",
+    "ruby": "ruby",
+    "php": "php",
+    "go": "go",
+    "java": "java",
+    "dotnet": "dotnet"
+  },
+  "packages": {
+    "django": "django",
+    "rails": "rails",
+    "angular": "angular",
+    "next": "nextjs",
+    "vue": "vue",
+    "nuxt": "nuxt",
+    "postgresql": "postgresql",
+    "redis": "redis",
+    "mysql": "mysql",
+    "mongodb": "mongodb",
+    "nginx": "nginx",
+    "elasticsearch": "elasticsearch"
+  },
+  "dockerImages": {
+    "node": "nodejs",
+    "python": "python",
+    "postgres": "postgresql",
+    "postgresql": "postgresql",
+    "mysql": "mysql",
+    "mariadb": "mariadb",
+    "mongo": "mongodb",
+    "mongodb": "mongodb",
+    "redis": "redis",
+    "nginx": "nginx",
+    "ubuntu": "ubuntu",
+    "alpine": "alpine",
+    "debian": "debian",
+    "ruby": "ruby",
+    "php": "php",
+    "golang": "go",
+    "openjdk": "java"
+  }
+}

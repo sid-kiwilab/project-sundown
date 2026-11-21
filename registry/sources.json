@@ -1,4 +1,33 @@
 {
-  "$comment": "Maps providers to official deprecation notice URLs.",
-  "sources": []
+  "$comment": "Maps providers to official deprecation notice URLs. No dates stored here.",
+  "sources": [
+    {
+      "provider": "openai",
+      "urls": [
+        "https://platform.openai.com/docs/deprecations.md",
+        "https://platform.openai.com/docs/deprecations"
+      ],
+      "modelsListUrls": [
+        "https://platform.openai.com/docs/models.md"
+      ]
+    },
+    {
+      "provider": "anthropic",
+      "urls": [
+        "https://docs.anthropic.com/en/docs/about-claude/model-deprecations"
+      ]
+    },
+    {
+      "provider": "google",
+      "urls": [
+        "https://ai.google.dev/gemini-api/docs/changelog"
+      ]
+    },
+    {
+      "provider": "mistral",
+      "urls": [
+        "https://docs.mistral.ai/getting-started/changelog/"
+      ]
+    }
+  ]
 }
