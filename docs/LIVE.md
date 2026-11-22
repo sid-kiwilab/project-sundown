@@ -184,7 +184,7 @@ LLM calls decrement by real token cost. Pre-check credits; mid-scan exhaustion �
 
 ## Web UI
 
-- Landing: paste public GitHub repo; light layout, plain copy. **(local: shipped)**
+- Landing (`/`): paste public GitHub repo; light layout, scan only. **`/reminders`**: copy consumer Action YAML (header nav + footer link; one repo at a time). **(local: shipped)**
 - Loading: stepped client copy (“Downloading the repository”, …). SSE not wired.
 - Report: alarm block first; **Clear / no notice / env / unchecked** in `<details>`. **(inline on `/` only; `/r/` not yet)**
 - OG: repo name, countdown, “X of Y on borrowed time”.

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { ScanReport } from "@sundown/engine/types";
+import Link from "next/link";
 import { ReportView } from "@/components/report-view";
 
 type ScanResponse = ScanReport & { repo?: string; error?: string };
@@ -78,9 +79,8 @@ export default function HomePage() {
   }
 
   return (
-    <main className="mx-auto min-h-screen max-w-3xl overflow-x-clip px-6 py-16 md:py-24">
-      <p className="text-sm font-medium text-muted">Sundown</p>
-      <h1 className="mt-3 text-4xl font-semibold leading-tight text-ink md:text-5xl">
+    <main className="mx-auto min-h-screen max-w-3xl overflow-x-clip px-6 pb-16 pt-8 md:pb-24 md:pt-10">
+      <h1 className="text-4xl font-semibold leading-tight text-ink md:text-5xl">
         What in this repo is already dying?
       </h1>
       <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted">
@@ -152,11 +152,17 @@ export default function HomePage() {
         >
           sundown-cli
         </a>
-        ).
+        ).{" "}
+        <Link
+          href="/reminders"
+          className="text-ink/70 underline decoration-line underline-offset-2 hover:text-ink"
+        >
+          Weekly GitHub reminders
+        </Link>
+        .
       </p>
       {process.env.NEXT_PUBLIC_CONTACT_URL ? (
         <p className="mt-4 text-sm text-muted">
-          Want ongoing monitoring and reminders, not just one scan?{" "}
           <a
             href={process.env.NEXT_PUBLIC_CONTACT_URL}
             className="text-ink underline decoration-line underline-offset-2 hover:text-ink/80"

@@ -2,7 +2,7 @@
 
 **Expiry-date audit for your whole repo** — models, APIs, packages, runtimes, SaaS.
 
-Origin: OpenAI’s **gpt-image-2** deprecation notice sat in docs for weeks unnoticed. Point Sundown at a repo and it flags what is already on borrowed time — with sources, not guesswork.
+Origin: OpenAI’s **gpt-image-2** deprecation notice sat in email for weeks unnoticed. Point Sundown at a repo and it flags what is already on borrowed time, with sources, not guesswork.
 
 ![CLI report for gpt-image-2 deprecation](docs/assets/cli-report.svg)
 
@@ -40,18 +40,31 @@ No credit cap or KV is wired yet; a public scan URL with keys enabled will spend
 
 ## Reminders (GitHub Action)
 
-Weekly scans with **no accounts** — Sundown opens or updates **one** alarm issue in the repo.
+Weekly scans with **no accounts**. In each repo where you add the workflow, Sundown opens or updates **one** alarm issue (label **`sundown`**).
 
-1. Copy [`.github/workflows/sundown.yml`](.github/workflows/sundown.yml) into your repository (or depend on this repo’s composite action).
-2. Grant `issues: write` (see workflow `permissions`).
-3. Optional secrets: `OPENROUTER_API_KEY` / `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` for Tier 2 model pages (**burns credits every run**). Without them, npm/PyPI/runtime EOL alarms still run (Tier 1).
-4. Locally: `npm run sundown -- . --issue` with `GITHUB_TOKEN` and [GitHub CLI](https://cli.github.com/) installed — upserts the issue labeled **`sundown`** (title `Sundown: dependency expiry alarm`).
+- **One repo:** drop the file below into **that** repo as `.github/workflows/sundown.yml` and push. This site does not enable reminders for you.
+- **Many repos:** repeat per repo (or use a GitHub org **reusable workflow**). There is no Sundown dashboard to “select all repos.”
+- **Local once:** `npm run sundown -- . --issue` with `GITHUB_TOKEN` and [GitHub CLI](https://cli.github.com/) (`issues: write`).
+- **Why not just an agent?** Sundown re-runs the same Tier 1/2 checks (npm, EOL, official pages with quote rules) every week. Agents are great for pasting this YAML; they are not a substitute for a scheduled, sourced report.
+
+Optional repo secret `OPENROUTER_API_KEY` (or OpenAI/Anthropic via the action inputs) enables model sunset rows (**burns credits each run**). Without API keys, npm/PyPI/runtime EOL alarms still run (Tier 1).
+
+`uses: ...@main` tracks the latest action on `main`; pin a commit SHA if you want a fixed version.
+
+Save as **`.github/workflows/sundown.yml`** in the repository you want scanned:
 
 ```yaml
-# Your repo — checkout first, then run Sundown (issues upsert via label: sundown).
+name: Sundown weekly
+
+on:
+  schedule:
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
+
 permissions:
   contents: read
   issues: write
+
 jobs:
   sundown:
     runs-on: ubuntu-latest
@@ -61,6 +74,8 @@ jobs:
         with:
           openrouter-api-key: ${{ secrets.OPENROUTER_API_KEY }}
 ```
+
+Example in this monorepo (same engine, local composite path): [`.github/workflows/sundown.yml`](.github/workflows/sundown.yml).
 
 ---
 

@@ -12,7 +12,7 @@ Spec of record for product goals remains [LIVE.md](./LIVE.md). This file is an *
 
 Point Sundown at a codebase (CLI on private disk, or paste a **public** GitHub URL in the local web UI). It lists **models, APIs, packages, runtimes, GitHub Actions, SaaS env hints**, then resolves **shutdown / deprecation** from official sources where possible. **No notice ≠ safe** — we label `no_notice_found` and `unverified` instead of pretending green.
 
-Origin story: OpenAI’s **gpt-image-2** deprecation sat in docs for weeks unnoticed; Sundown is meant to ring that bell.
+Origin story: OpenAI’s **gpt-image-2** deprecation sat in email for weeks unnoticed; Sundown is meant to ring that bell.
 
 ---
 

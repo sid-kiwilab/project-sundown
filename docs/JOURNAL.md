@@ -4,6 +4,12 @@ Newest first. Stable ops + product spec: [LIVE.md](LIVE.md).
 
 ---
 
+## 2026-11-22 — Landing reminders panel + README honesty (PLAN → REVIEW → SYNC)
+
+- **Shipped:** [`/reminders`](apps/web/app/reminders/page.tsx) page + [`SiteHeader`](apps/web/components/site-header.tsx) nav; [`RemindersPanel`](apps/web/components/reminders-panel.tsx) with copyable consumer workflow; per-repo / many-repos / vs-agent copy in [README](../README.md); `\${{` escape in [`consumer-sundown-workflow.ts`](apps/web/lib/consumer-sundown-workflow.ts). Origin story: **email**, not docs.
+- **Key files:** `apps/web/app/reminders/page.tsx`, `site-header.tsx`, `reminders-panel.tsx`, `consumer-sundown-workflow.ts`, `README.md`, `docs/assets/cli-report.svg`
+- **Gaps:** uncommitted until PUSH.
+
 ## 2026-11-22 — Alarm-first report, npm healthy, weekly Action (PLAN → REVIEW → SYNC)
 
 - **Shipped:** Tier 1 **healthy** for npm/PyPI when pinned version is not deprecated/yanked; `partitionReportFindings` for web + CLI table/issue; issue upsert via label **`sundown`**; `.github/actions/sundown` + example `workflows/sundown.yml`; web light UI + friendlier landing copy (alarms still first).
