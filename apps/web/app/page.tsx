@@ -81,8 +81,9 @@ export default function HomePage() {
       <p className="mt-4 text-lg text-zinc-400">
         Paste a <strong className="text-zinc-200">public</strong> GitHub
         repository. Every row is checked against a named source or listed as
-        unchecked with a reason. Tier 2 uses repo{" "}
-        <code className="text-zinc-500">.env</code> LLM keys — no account.
+        unchecked with a reason. Tier 2 model notices use server env (
+        <code className="text-zinc-500">OPENROUTER_API_KEY</code>, OpenAI, or
+        Anthropic) — no account.
       </p>
 
       <form
@@ -125,8 +126,10 @@ export default function HomePage() {
       {report?.meta?.tier2Enabled === false &&
       report?.meta?.tier2SkipReason ? (
         <p className="mt-6 rounded-lg border border-zinc-700 bg-panel px-4 py-3 text-sm text-zinc-400">
-          {report.meta.tier2SkipReason} Restart the dev server after editing{" "}
-          <code className="text-zinc-300">.env</code> at the repo root.
+          {report.meta.tier2SkipReason} On this host, set those keys in the
+          deployment environment (e.g. Vercel project settings). Locally, use
+          repo-root <code className="text-zinc-300">.env</code> and restart{" "}
+          <code className="text-zinc-300">npm run dev</code>.
         </p>
       ) : null}
 

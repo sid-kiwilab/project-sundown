@@ -8,6 +8,9 @@ loadEnvConfig(monorepoRoot);
 const nextConfig: NextConfig = {
   transpilePackages: ["@sundown/engine"],
   outputFileTracingRoot: monorepoRoot,
+  outputFileTracingIncludes: {
+    "/api/scan": ["./registry/**/*.json"],
+  },
 };
 
 export default nextConfig;

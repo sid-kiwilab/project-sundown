@@ -18,7 +18,8 @@ Local dev: [README.md](../README.md). Session history: [JOURNAL.md](JOURNAL.md).
 | Stack | Monorepo: `packages/engine` (pure TS), `packages/cli`, `apps/web` (Next.js App Router, Tailwind); Upstash Redis on hosted site |
 | App root | `apps/web/` |
 | Dev (web) | **Shipped (local)** — `start.bat` or `npm run dev` → **http://localhost:3000**; paste public `github.com/owner/repo` |
-| CLI (local) | **Shipped (workspace)** — `@sundown/engine` + `sundown-cli`; `npm run build:engine && npm run build:cli` then `npm run sundown -- [path]` |
+| Web (Vercel) | **Config shipped** — Root Directory **`apps/web`** + [`apps/web/vercel.json`](../apps/web/vercel.json); Tier 2 from deployment env; owner connects GitHub → prod |
+| CLI (local) | **Shipped (workspace)** — `@sundown/engine` + `sundown-cli`; `npm run build:engine && npm run build:cli` then `npm run sundown -- [path]` (reads repo-root `.env` via engine) |
 | CLI (npm) | *Pending publish* — `npx sundown-cli` after `npm publish` on `sundown-cli` |
 | Backend (hosted) | Scan API, credits, cache — Vercel + KV |
 | Env (hosted) | `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` (optional), `KV_*`, `ADMIN_SECRET`, `CONTACT_URL`, optional `GITHUB_TOKEN` (archived-repo limits) |
@@ -223,7 +224,7 @@ Same engine as web; Tier 1 offline where possible; `--fail-on-days` for CI gates
 2. **CLI** — table, `--json`, `--issue`, `--fail-on-days`, terminal alarm. **(shipped, workspace only)**
 3. **Tier 2** — OpenAI + **Anthropic** pipe-table parse + batch LLM; Google, Mistral via fetch + LLM + quote gates (no structured row parser for those yet).
 4. **Action** + npm publish + README GIF.
-5. **web** — landing, API, report, cache, credits, out-of-credits. **(partial: local landing + `/api/scan` + Tier 2 when keys set; no KV/credits/`/r/`)**
+5. **web** — landing, API, report, cache, credits, out-of-credits. **(partial: local + Vercel build config; `/api/scan` + Tier 2 when keys set; no KV/credits/`/r/`)**
 6. OG + copy-as-issue.
 7. **Tier 3** + demo scan aliasengine for launch.
 
@@ -235,8 +236,8 @@ Same engine as web; Tier 1 offline where possible; `--fail-on-days` for CI gates
 - [x] **Tier 2 demo:** Vitest `packages/engine` fixture `fixtures/gpt-image-2` + mocked OpenAI deprecations table flags **gpt-image-2** → **2027-02-10**, replacement, source link (live `aliasengine` scan optional after publish).
 - [x] Old Node + deprecated npm package both show `official-data` (Vitest fixtures + mocked HTTP).
 - [ ] Credits at zero → friendly page, no stack trace (hosted).
-- [x] **Web (local):** paste public GitHub URL at `localhost:3000`, report in browser (`start.bat` / `npm run dev`; Tier 2 when keys in root `.env`).
-- [ ] Public README with report screenshot + two-line origin story.
+- [x] **Web (local):** paste public GitHub URL at `localhost:3000`, report in browser (`start.bat` / `npm run dev`; Tier 2 when keys in root `.env` locally or deployment env on Vercel).
+- [x] **Public README** with report illustration (`docs/assets/cli-report.svg`) + two-line origin story; clone/install path — not `npx` until publish.
 
 ---
 
@@ -245,8 +246,10 @@ Same engine as web; Tier 1 offline where possible; `--fail-on-days` for CI gates
 | File | Role |
 |------|------|
 | `packages/engine/src/*` | Scan pipeline |
+| `packages/engine/src/dotenv.ts` | Workspace `.env`, `resolveSundownRegistryPath` |
 | `packages/cli/src/*` | CLI entry |
 | `apps/web/app/*` | Next.js routes + API |
+| `apps/web/vercel.json` | Vercel install/build from monorepo root |
 | `registry/*.json` | Seeds and overrides |
 | `harness/*` | V2 agent kit |
 | [`.env.example`](../.env.example) | CLI + optional `REGISTRY_PATH`, `GITHUB_TOKEN` for web scans |
@@ -268,7 +271,8 @@ Same engine as web; Tier 1 offline where possible; `--fail-on-days` for CI gates
 | `GITHUB_TOKEN` | No | CLI / web API | `--issue`, archived checks; higher GitHub API limits for tarball/default branch |
 | `OPENROUTER_API_KEY` | No | CLI / web | Tier 2 reader (preferred OpenAI-compatible) |
 | `SUNDOWN_LLM_MODEL` | No | CLI / web | Optional model slug (default `openai/gpt-4o-mini` on OpenRouter) |
-| `REGISTRY_PATH` | No | Web (Vercel) | Override monorepo `registry/` (default: resolved from `apps/web` layout) |
+| `REGISTRY_PATH` | No | CLI / web | Absolute path to `registry/` if auto-detect fails (Vercel) |
+| `SUNDOWN_MONOREPO_ROOT` | No | CLI / web | Repo root (parent of `registry/`) if walk fails |
 | `NEXT_PUBLIC_CONTACT_URL` | No | Web | “Interested in monitoring?” CTA on landing |
 
 ---
@@ -296,7 +300,7 @@ npm run lint     # tsc --noEmit on @sundown/engine and @sundown/web
 
 - [x] Initialize git + GitHub repo `sid-kiwilab/project-sundown`
 - [ ] Publish `sundown-cli` to npm
-- [ ] Vercel project on `apps/web` with KV env
-- [ ] Set `credits:remaining` + `CONTACT_URL`
-- [ ] `npm run build` clean before prod
-- [ ] Confirm public scan + out-of-credits + CLI parity on Tier 1
+- [ ] Vercel project — import repo, Root Directory **`apps/web`**, env from `.env.example` (no KV yet)
+- [ ] Set `credits:remaining` + `CONTACT_URL` (when KV ships)
+- [ ] `npm run build` clean before prod (PUSH)
+- [ ] Owner: confirm public scan on prod + CLI Tier 2 from `.env` (`gpt-image-2` fixture)

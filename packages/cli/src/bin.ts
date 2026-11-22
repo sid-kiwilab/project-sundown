@@ -1,7 +1,12 @@
 #!/usr/bin/env node
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { scan, type Finding, type ScanReport } from "@sundown/engine";
+import {
+  applyRootDotenv,
+  scan,
+  type Finding,
+  type ScanReport,
+} from "@sundown/engine";
 import { printTable } from "./table.js";
 import { issueBody } from "./issue.js";
 
@@ -72,9 +77,11 @@ async function maybeCreateIssue(report: ScanReport): Promise<void> {
 }
 
 async function main(): Promise<number> {
+  const registryPath = resolveRegistryFromCli();
+  applyRootDotenv({ root: path.dirname(registryPath) });
+
   const { target, json, issue, failOnDays } = parseArgs(process.argv);
   const absTarget = path.resolve(process.cwd(), target);
-  const registryPath = resolveRegistryFromCli();
 
   const report = await scan(absTarget, { registryPath });
 

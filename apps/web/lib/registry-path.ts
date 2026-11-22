@@ -1,14 +1,17 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { resolveSundownRegistryPath } from "@sundown/engine";
 
-/** Monorepo `registry/` — stable regardless of process cwd (dev, start.bat, Vercel). */
+/** Monorepo `registry/` for scans — stable on dev and Vercel. */
 export function monorepoRegistryPath(): string {
-  if (process.env.REGISTRY_PATH) {
-    return path.resolve(process.env.REGISTRY_PATH);
-  }
-  const webRoot = path.resolve(
-    path.dirname(fileURLToPath(import.meta.url)),
-    "..",
-  );
-  return path.resolve(webRoot, "../../registry");
+  const here = path.dirname(fileURLToPath(import.meta.url));
+  return resolveSundownRegistryPath({
+    searchFrom: [
+      process.cwd(),
+      here,
+      path.resolve(here, ".."),
+      path.resolve(here, "../.."),
+      path.resolve(here, "../../.."),
+    ],
+  });
 }

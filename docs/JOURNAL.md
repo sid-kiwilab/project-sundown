@@ -4,6 +4,13 @@ Newest first. Stable ops + product spec: [LIVE.md](LIVE.md).
 
 ---
 
+## 2026-11-22 — Clone + Vercel-ready (PLAN → Build → REVIEW → FIX → SYNC)
+
+- **Shipped:** `@sundown/engine` `dotenv.ts` — `applyRootDotenv` (workspace `.env` only), `resolveSundownRegistryPath` with multi-anchor search + throw; CLI loads keys from Sundown root before `scan()`; web registry via `import.meta.url` + traced `registry/**/*.json` in `next.config.ts`; [`apps/web/vercel.json`](../apps/web/vercel.json); honest README + `docs/assets/cli-report.svg`; landing copy = server env on Vercel.
+- **Tests:** Vitest `dotenv.test.ts` (+2); engine total **21** after `npm test`.
+- **Key files:** `packages/engine/src/dotenv.ts`, `packages/cli/src/bin.ts`, `apps/web/lib/registry-path.ts`, `README.md`
+- **Gaps:** npm publish; KV/credits; owner prod scan on Vercel; commit/push on main.
+
 ## 2026-11-21 — Anthropic pipe-table parse + lint (FIX → SYNC)
 
 - **Shipped:** `parseMarkdownDeprecationRow` handles **Anthropic** retirement-history and status tables (same Tier 2 path as OpenAI); root **`npm run lint`** = `tsc --noEmit` on **engine + web** (`next build` still typechecks/lints web for prod).
