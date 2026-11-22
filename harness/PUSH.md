@@ -25,7 +25,7 @@ If this pass touches **`apps/web`** or Vercel config, also run from `apps/web` (
 vercel build
 ```
 
-`npm run build` does not run Vercel’s post-`next build` packaging step; that is what catches errors like missing `.next/export-detail.json` on monorepos.
+`npm run build` does not run Vercel’s post-`next build` packaging step. Do not commit fake `.next/export-detail.json` files — `success: false` triggers `NEXT_EXPORT_FAILED`.
 
 If the monorepo uses per-package scripts only, run the workspace build/lint Sid documents in [docs/LIVE.md](../docs/LIVE.md) — same gate: all packages touched by this pass must pass.
 

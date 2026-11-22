@@ -27,7 +27,7 @@ Reports show **checked N of M** — “checked” means we queried a named sourc
 
 ## Deploy on Vercel
 
-1. Import this GitHub repo; set **Root Directory** to **`apps/web`** (uses [`apps/web/vercel.json`](apps/web/vercel.json) — install runs from the monorepo root for workspaces). In **Project Settings → Build & Deployment**, turn **off** “Include files outside the root directory in the Build Step” if you see `export-detail.json` or doubled `.next` path errors.
+1. Import this GitHub repo; set **Root Directory** to **`apps/web`** (uses [`apps/web/vercel.json`](apps/web/vercel.json)). **Framework preset: Next.js.** Leave **Output Directory empty** (do not override to `.next` or `apps/web/.next` — that breaks deploy). **Include files outside the root directory:** **on** (install/build use `cd ../..`).
 2. Set **environment variables** (same as `.env.example`):
    - `OPENROUTER_API_KEY` and/or `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` — Tier 2 model notices (**uses LLM credits on every scan that needs Tier 2**).
    - `GITHUB_TOKEN` — recommended for tarball download rate limits.
