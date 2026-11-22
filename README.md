@@ -27,7 +27,7 @@ Reports show **checked N of M** — “checked” means we queried a named sourc
 
 ## Deploy on Vercel
 
-1. Import this GitHub repo; set **Root Directory** to **`apps/web`** (uses [`apps/web/vercel.json`](apps/web/vercel.json) — install runs from the monorepo root for workspaces).
+1. Import this GitHub repo; **Root Directory** `apps/web`, Framework **Next.js**, **Output Directory empty**, Build Command **empty** (default `next build`). [`apps/web/vercel.json`](apps/web/vercel.json) only overrides install: monorepo `npm install` + `build:engine`.
 2. Set **environment variables** (same as `.env.example`):
    - `OPENROUTER_API_KEY` and/or `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` — Tier 2 model notices (**uses LLM credits on every scan that needs Tier 2**).
    - `GITHUB_TOKEN` — recommended for tarball download rate limits.

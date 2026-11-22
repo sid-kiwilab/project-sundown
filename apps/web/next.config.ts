@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
   transpilePackages: ["@sundown/engine"],
   outputFileTracingRoot: monorepoRoot,
   outputFileTracingIncludes: {
-    "/api/scan": ["./registry/**/*.json"],
+    "/api/scan": ["../../registry/**/*.json"],
   },
 };
 

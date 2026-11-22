@@ -4,6 +4,11 @@ Newest first. Stable ops + product spec: [LIVE.md](LIVE.md).
 
 ---
 
+## 2026-11-22 — Registry trace path + default Next build (FIX → SYNC)
+
+- **Shipped:** `outputFileTracingIncludes` → `../../registry/**/*.json`; [`apps/web/vercel.json`](../apps/web/vercel.json) **install only** (`npm install` + `build:engine`); Vercel default **`next build`** from Root Directory `apps/web`. No packaging stubs.
+- **Gaps:** Owner reconnects Vercel (Framework Next.js, Output Directory empty, Build Command empty); prod scan unproven.
+
 ## 2026-11-22 — Drop Vercel packaging workarounds (SYNC)
 
 - **Reverted:** post-`next build` `export-detail.json` stubs, `prebuild`/`build.mjs`, `stage-registry-for-web`, `docs/VERCEL.md`, `outputFileTracingRoot` toggles, extra `framework` in `vercel.json`. Tree matches **`040fd66`** plus clone/CLI `.env` work.
