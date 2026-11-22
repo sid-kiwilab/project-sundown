@@ -41,13 +41,24 @@ export async function resolveNpmPackage(
   if (!ver) return {};
 
   const deprecated = tryVersion(ver);
-  if (!deprecated) return {};
+  if (deprecated) {
+    return {
+      status: "deprecated",
+      confidence: "official-data",
+      sourceUrl: url,
+      sourceQuote: deprecated,
+      replacement: undefined,
+    };
+  }
 
-  return {
-    status: "deprecated",
-    confidence: "official-data",
-    sourceUrl: url,
-    sourceQuote: deprecated,
-    replacement: undefined,
-  };
+  if (data.versions[ver]) {
+    return {
+      status: "healthy",
+      confidence: "official-data",
+      sourceUrl: url,
+      sourceQuote: `npm: ${name}@${ver} is not marked deprecated`,
+    };
+  }
+
+  return {};
 }

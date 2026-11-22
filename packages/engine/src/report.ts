@@ -7,6 +7,49 @@ const BORROWED_STATUSES = new Set([
   "dead",
 ]);
 
+export const ALARM_STATUSES = BORROWED_STATUSES;
+
+export function isAlarmFinding(f: Finding): boolean {
+  return ALARM_STATUSES.has(f.status);
+}
+
+export function isEnvHintFinding(f: Finding): boolean {
+  return f.kind === "saas" && f.name.startsWith("env:");
+}
+
+export function partitionReportFindings(findings: Finding[]): {
+  alarms: Finding[];
+  clear: Finding[];
+  noNotice: Finding[];
+  envHints: Finding[];
+  unchecked: Finding[];
+} {
+  const sorted = sortFindings(findings);
+  const alarms: Finding[] = [];
+  const clear: Finding[] = [];
+  const noNotice: Finding[] = [];
+  const envHints: Finding[] = [];
+  const unchecked: Finding[] = [];
+
+  for (const f of sorted) {
+    if (isAlarmFinding(f)) {
+      alarms.push(f);
+    } else if (isEnvHintFinding(f)) {
+      envHints.push(f);
+    } else if (f.status === "healthy") {
+      clear.push(f);
+    } else if (f.status === "no_notice_found" && f.checked) {
+      noNotice.push(f);
+    } else if (!f.checked) {
+      unchecked.push(f);
+    } else {
+      noNotice.push(f);
+    }
+  }
+
+  return { alarms, clear, noNotice, envHints, unchecked };
+}
+
 export function sortFindings(findings: Finding[]): Finding[] {
   return [...findings].sort((a, b) => {
     const aDays = a.daysLeft ?? Number.POSITIVE_INFINITY;
@@ -21,7 +64,9 @@ export function sortFindings(findings: Finding[]): Finding[] {
             ? 2
             : s === "no_notice_found"
               ? 4
-              : 3;
+              : s === "healthy"
+                ? 5
+                : 3;
     return rank(a.status) - rank(b.status);
   });
 }

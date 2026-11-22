@@ -23,7 +23,7 @@ npm test
 
 **npm:** `npx sundown-cli` is not published yet — use `npm run sundown --` from this repo until release.
 
-Reports show **checked N of M** — “checked” means we queried a named source for that row (no notice on that page still counts). API host rows stay unchecked.
+Reports show **checked N of M** — “checked” means we queried a named source for that row (no notice on that page still counts). npm/PyPI pins with no deprecation flag show **`healthy`**, not “unverified”. The web UI leads with expiring rows; the CLI prints an **ALARMS** section first. API host rows stay unchecked.
 
 ## Deploy on Vercel
 
@@ -37,6 +37,30 @@ Reports show **checked N of M** — “checked” means we queried a named sourc
 **Only** [`apps/web/vercel.json`](apps/web/vercel.json) applies — do not import the monorepo at the repo root without Root Directory `apps/web`.
 
 No credit cap or KV is wired yet; a public scan URL with keys enabled will spend your provider quota.
+
+## Reminders (GitHub Action)
+
+Weekly scans with **no accounts** — Sundown opens or updates **one** alarm issue in the repo.
+
+1. Copy [`.github/workflows/sundown.yml`](.github/workflows/sundown.yml) into your repository (or depend on this repo’s composite action).
+2. Grant `issues: write` (see workflow `permissions`).
+3. Optional secrets: `OPENROUTER_API_KEY` / `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` for Tier 2 model pages (**burns credits every run**). Without them, npm/PyPI/runtime EOL alarms still run (Tier 1).
+4. Locally: `npm run sundown -- . --issue` with `GITHUB_TOKEN` and [GitHub CLI](https://cli.github.com/) installed — upserts the issue labeled **`sundown`** (title `Sundown: dependency expiry alarm`).
+
+```yaml
+# Your repo — checkout first, then run Sundown (issues upsert via label: sundown).
+permissions:
+  contents: read
+  issues: write
+jobs:
+  sundown:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: sid-kiwilab/project-sundown/.github/actions/sundown@main
+        with:
+          openrouter-api-key: ${{ secrets.OPENROUTER_API_KEY }}
+```
 
 ---
 

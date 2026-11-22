@@ -1,0 +1,37 @@
+name: Sundown scan
+description: Run Sundown against the repository and upsert a weekly alarm issue. Caller workflow must run actions/checkout on the repo to scan first.
+inputs:
+  openrouter-api-key:
+    description: Optional OpenRouter key for Tier 2 model notices (uses credits each run).
+    required: false
+  openai-api-key:
+    description: Optional OpenAI key for Tier 2.
+    required: false
+  anthropic-api-key:
+    description: Optional Anthropic key for Tier 2.
+    required: false
+runs:
+  using: composite
+  steps:
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: "20"
+    - name: Install and build Sundown
+      shell: bash
+      run: |
+        TOOL_ROOT="${{ github.action_path }}/../../.."
+        cd "$TOOL_ROOT"
+        npm ci
+        npm run build:engine
+        npm run build:cli
+    - name: Scan and upsert issue
+      shell: bash
+      run: |
+        TOOL_ROOT="${{ github.action_path }}/../../.."
+        node "$TOOL_ROOT/packages/cli/dist/bin.js" "$GITHUB_WORKSPACE" --issue
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+        OPENROUTER_API_KEY: ${{ inputs.openrouter-api-key }}
+        OPENAI_API_KEY: ${{ inputs.openai-api-key }}
+        ANTHROPIC_API_KEY: ${{ inputs.anthropic-api-key }}

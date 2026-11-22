@@ -43,6 +43,26 @@ export function createMockFetch(): typeof fetch {
         headers: { "Content-Type": "application/json" },
       });
     }
+    const npmMatch = url.match(/registry\.npmjs\.org\/([^/?]+)/);
+    if (npmMatch) {
+      const name = decodeURIComponent(npmMatch[1]!);
+      const ver = url.includes("/lodash")
+        ? "4.17.21"
+        : url.includes("/next")
+          ? "16.0.0"
+          : url.includes("/react")
+            ? "19.0.0"
+            : "1.0.0";
+      return new Response(
+        JSON.stringify({
+          name,
+          versions: {
+            [ver]: { version: ver },
+          },
+        }),
+        { status: 200, headers: { "Content-Type": "application/json" } },
+      );
+    }
     return new Response("not found", { status: 404 });
   };
 }

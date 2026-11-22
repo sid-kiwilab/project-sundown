@@ -4,6 +4,13 @@ Newest first. Stable ops + product spec: [LIVE.md](LIVE.md).
 
 ---
 
+## 2026-11-22 — Alarm-first report, npm healthy, weekly Action (PLAN → REVIEW → SYNC)
+
+- **Shipped:** Tier 1 **healthy** for npm/PyPI when pinned version is not deprecated/yanked; `partitionReportFindings` for web + CLI table/issue; issue upsert via label **`sundown`**; `.github/actions/sundown` + example `workflows/sundown.yml`; web light UI + friendlier landing copy (alarms still first).
+- **Tests:** Vitest **24** (incl. `healthy-npm`, `next-stack`, `npm.test.ts`).
+- **Key files:** `packages/engine/src/resolvers/{npm,pypi,tier1}.ts`, `report.ts`, `packages/cli/src/{bin,issue,table}.ts`, `apps/web/components/report-view.tsx`, `.github/**`
+- **Gaps:** npm publish; push commit; owner prod/Vercel smoke + browser check; legacy issues without `sundown` label need one-time cleanup if duplicates exist.
+
 ## 2026-11-22 — Registry trace path + default Next build (FIX → SYNC)
 
 - **Shipped:** `outputFileTracingIncludes` → `../../registry/**/*.json`; [`apps/web/vercel.json`](../apps/web/vercel.json) **install only** (`npm install` + `build:engine`); Vercel default **`next build`** from Root Directory `apps/web`. No packaging stubs.

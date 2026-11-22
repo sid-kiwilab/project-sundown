@@ -37,5 +37,14 @@ export async function resolvePyPiPackage(
     };
   }
 
+  if (ver && data.releases[ver]?.length) {
+    return {
+      status: "healthy",
+      confidence: "official-data",
+      sourceUrl: url,
+      sourceQuote: `PyPI: ${name}@${ver} is not yanked`,
+    };
+  }
+
   return {};
 }

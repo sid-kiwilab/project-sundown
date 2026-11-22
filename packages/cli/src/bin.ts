@@ -8,7 +8,11 @@ import {
   type ScanReport,
 } from "@sundown/engine";
 import { printTable } from "./table.js";
-import { issueBody } from "./issue.js";
+import {
+  issueBody,
+  SUNDOWN_ISSUE_LABEL,
+  SUNDOWN_ISSUE_TITLE,
+} from "./issue.js";
 
 function parseArgs(argv: string[]) {
   let target = ".";
@@ -50,7 +54,7 @@ async function maybeCreateIssue(report: ScanReport): Promise<void> {
   const body = issueBody(report);
   if (!token) {
     console.error(
-      "Set GITHUB_TOKEN to open a GitHub issue, or pipe this body:\n",
+      "Set GITHUB_TOKEN to open or update a GitHub issue, or pipe this body:\n",
     );
     console.error(body);
     return;
@@ -58,19 +62,63 @@ async function maybeCreateIssue(report: ScanReport): Promise<void> {
   const { execFile } = await import("node:child_process");
   const { promisify } = await import("node:util");
   const execFileAsync = promisify(execFile);
+  const ghEnv = { ...process.env, GITHUB_TOKEN: token, GH_PAGER: "" };
+
+  const runGh = async (args: string[]) => {
+    const { stdout } = await execFileAsync("gh", args, { env: ghEnv });
+    return stdout.trim();
+  };
+
   try {
-    await execFileAsync("gh", [
+    const listedRaw = await runGh([
+      "issue",
+      "list",
+      "--label",
+      SUNDOWN_ISSUE_LABEL,
+      "--state",
+      "all",
+      "--limit",
+      "30",
+      "--json",
+      "number,state",
+    ]);
+    const listed = (
+      listedRaw ? JSON.parse(listedRaw) : []
+    ) as { number: number; state: string }[];
+
+    const existing =
+      listed.find((i) => i.state === "OPEN") ?? listed[0];
+    if (existing) {
+      if (existing.state === "CLOSED") {
+        await runGh(["issue", "reopen", String(existing.number)]);
+      }
+      await runGh([
+        "issue",
+        "edit",
+        String(existing.number),
+        "--body",
+        body,
+        "--add-label",
+        SUNDOWN_ISSUE_LABEL,
+      ]);
+      console.error(`Updated GitHub issue #${existing.number}.`);
+      return;
+    }
+
+    await runGh([
       "issue",
       "create",
       "--title",
-      `Sundown: ${report.headline}`,
+      SUNDOWN_ISSUE_TITLE,
       "--body",
       body,
+      "--label",
+      SUNDOWN_ISSUE_LABEL,
     ]);
     console.error("Created GitHub issue via gh CLI.");
   } catch {
     console.error(
-      "gh CLI failed. Install GitHub CLI or use Octokit. Body:\n",
+      "gh CLI failed. Install GitHub CLI and grant issues: write. Body:\n",
       body,
     );
   }

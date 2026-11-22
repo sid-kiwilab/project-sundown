@@ -28,8 +28,40 @@ describe("scan()", () => {
     expect(node!.confidence).toBe("official-data");
     expect(node!.sourceUrl).toBeTruthy();
     expect(node!.checked).toBe(true);
+    expect(node!.status).toBe("dead");
     expect(report.coverageLine).toMatch(/Checked \d+ of \d+/);
     expect(report.meta?.coverage).toBeDefined();
+  });
+
+  it("fixture next-stack marks next@16 and react@19 healthy on npm", async () => {
+    const report = await scan(path.join(fixturesDir, "next-stack"), {
+      registryPath,
+      fetchImpl: createMockFetch(),
+    });
+    const next = report.findings.find(
+      (f) => f.kind === "package" && f.name === "next",
+    );
+    const react = report.findings.find(
+      (f) => f.kind === "package" && f.name === "react",
+    );
+    expect(next?.status).toBe("healthy");
+    expect(next?.confidence).toBe("official-data");
+    expect(react?.status).toBe("healthy");
+    expect(react?.confidence).toBe("official-data");
+  });
+
+  it("fixture healthy-npm marks lodash healthy on registry", async () => {
+    const report = await scan(path.join(fixturesDir, "healthy-npm"), {
+      registryPath,
+      fetchImpl: createMockFetch(),
+    });
+    const pkg = report.findings.find(
+      (f) => f.kind === "package" && f.name === "lodash",
+    );
+    expect(pkg).toBeDefined();
+    expect(pkg!.status).toBe("healthy");
+    expect(pkg!.confidence).toBe("official-data");
+    expect(pkg!.checked).toBe(true);
   });
 
   it("fixture deprecated-npm flags left-pad", async () => {

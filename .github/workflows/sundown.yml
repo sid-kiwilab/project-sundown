@@ -1,0 +1,20 @@
+# Example: weekly Sundown on this repo. Copy or call the composite action from your project.
+name: Sundown weekly
+
+on:
+  schedule:
+  - cron: "0 9 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/sundown
+        with:
+          openrouter-api-key: ${{ secrets.OPENROUTER_API_KEY }}

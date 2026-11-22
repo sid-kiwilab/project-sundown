@@ -25,7 +25,7 @@ Local dev: [README.md](../README.md). Session history: [JOURNAL.md](JOURNAL.md).
 | Env (hosted) | `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` (optional), `KV_*`, `ADMIN_SECRET`, `CONTACT_URL`, optional `GITHUB_TOKEN` (archived-repo limits) |
 | Env (CLI) | User’s `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` for Tier 2/3; `GITHUB_TOKEN` for `--issue` |
 | Production URL | Unset |
-| Accent | Alarm red — dark UI in `apps/web` (landing + inline report) |
+| Accent | Light neutral UI in `apps/web` (warm off-white; urgency on rows only, not chrome) |
 | License | MIT |
 
 ### Git (this repo only)
@@ -69,7 +69,8 @@ Agent harness in [`harness/`](../harness/) — ported from **siddharth_venkatesh
 | `registry/models.json` | Model ID patterns by provider |
 | `registry/sources.json` | Official deprecation page URLs |
 | `registry/packages.json` | Manual overrides for known dead services |
-| `.github/workflows/` | Optional: weekly sundown Action + `action.yml` for `uses: <owner>/sundown@v1` |
+| `.github/actions/sundown/` | Composite Action: build engine/CLI, scan `$GITHUB_WORKSPACE`, `npm run sundown -- . --issue` |
+| `.github/workflows/sundown.yml` | Example weekly cron on this repo (copy or call remote `uses: sid-kiwilab/project-sundown/.github/actions/sundown@main`) |
 
 ---
 
@@ -107,8 +108,9 @@ Each detector returns `{ kind, name, version?, file, line, raw }`.
 **Tier 1 — free, deterministic**
 
 - Runtimes/images: [endoflife.date](https://endoflife.date) API.
-- npm `deprecated` field **for the declared version only** (exact pin; no `latest` / sibling-version inference).
-- PyPI yanked / inactive signals.
+- npm: exact pin **deprecated** → alarm; pin exists and not deprecated → **`healthy`** + `official-data` (not “no notice / unverified”).
+- PyPI: yanked version → alarm; pin exists and not yanked → **`healthy`** + `official-data`.
+- Models/APIs: no provider notice stay **`no_notice_found`** (page fetch ≠ safe).
 - GitHub `archived` on dependency repos (cached; optional token).
 - Actions: archived actions, deprecated Node on runner.
 
@@ -160,9 +162,9 @@ type Finding = {
 | ≤1 | critical (+ terminal bell `\u0007` in CLI) |
 | past | already dead |
 
-Headline: **X of Y dependencies are on borrowed time.** Hero countdown: **YOUR APP BREAKS IN N DAYS.** Sections sorted by soonest `endDate`. Footer: **No notice found does not mean safe.**
+Headline: **X of Y dependencies are on borrowed time.** Hero countdown: **YOUR APP BREAKS IN N DAYS.** Alarms sorted by soonest `endDate` / status; **healthy** and checked “no notice” rows collapsed in web/CLI. Footer: **No notice found does not mean safe.**
 
-**Outputs (v1):** Web report; JSON (`POST /api/scan`, CLI `--json`); terminal table; OG image; **Copy as GitHub issue** / CLI `sundown . --issue` (user `GITHUB_TOKEN` via `gh` or Octokit).
+**Outputs (v1):** Web report; JSON (`POST /api/scan`, CLI `--json`); terminal table (alarms first); OG image; CLI `sundown . --issue` — upserts one issue labeled **`sundown`** via `gh` (`GITHUB_TOKEN`, `issues: write`).
 
 ---
 
@@ -182,9 +184,9 @@ LLM calls decrement by real token cost. Pre-check credits; mid-scan exhaustion �
 
 ## Web UI
 
-- Landing: paste public GitHub repo; dark + alarm-red accent. **(local: shipped)**
-- Loading: progress (“Downloading repo”, “Found N dependencies”, …) via SSE or polling. **(local: stepped client copy only)**
-- Report: `/r/<owner>/<repo>` shareable. **(not yet — inline results on `/` only)**
+- Landing: paste public GitHub repo; light layout, plain copy. **(local: shipped)**
+- Loading: stepped client copy (“Downloading the repository”, …). SSE not wired.
+- Report: alarm block first; **Clear / no notice / env / unchecked** in `<details>`. **(inline on `/` only; `/r/` not yet)**
 - OG: repo name, countdown, “X of Y on borrowed time”.
 - Mobile-friendly; no accounts.
 
@@ -204,7 +206,7 @@ LLM calls decrement by real token cost. Pre-check credits; mid-scan exhaustion �
 npx sundown-cli [path] [--json] [--issue] [--fail-on-days=N]
 ```
 
-Same engine as web; Tier 1 offline where possible; `--fail-on-days` for CI gates.
+Same engine as web; Tier 1 offline where possible; `--fail-on-days` for CI gates. `--issue` requires [GitHub CLI](https://cli.github.com/) + `GITHUB_TOKEN`; finds/creates issue with label **`sundown`** (not title search).
 
 ---
 
@@ -223,8 +225,8 @@ Same engine as web; Tier 1 offline where possible; `--fail-on-days` for CI gates
 1. **engine** — fetch + detectors + Tier 1 + tests on fixtures. **(shipped)**
 2. **CLI** — table, `--json`, `--issue`, `--fail-on-days`, terminal alarm. **(shipped, workspace only)**
 3. **Tier 2** — OpenAI + **Anthropic** pipe-table parse + batch LLM; Google, Mistral via fetch + LLM + quote gates (no structured row parser for those yet).
-4. **Action** + npm publish + README GIF.
-5. **web** — landing, API, report, cache, credits, out-of-credits. **(partial: local + Vercel build config; `/api/scan` + Tier 2 when keys set; no KV/credits/`/r/`)**
+4. **Action** example workflow + composite in repo **(shipped)**; npm publish + README GIF still pending.
+5. **web** — landing, API, report, cache, credits, out-of-credits. **(partial: local + Vercel; `/api/scan` + alarm-first report; no KV/credits/`/r/`)**
 6. OG + copy-as-issue.
 7. **Tier 3** + demo scan aliasengine for launch.
 

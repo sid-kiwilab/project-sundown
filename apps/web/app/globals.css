@@ -3,5 +3,22 @@
 @tailwind utilities;
 
 body {
-  @apply bg-surface text-zinc-100 antialiased;
+  @apply bg-surface text-ink antialiased;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+details > summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 0.5rem;
+  color: rgb(161 161 170);
+  transition: transform 0.15s ease;
+}
+
+details[open] > summary::before {
+  transform: rotate(90deg);
 }

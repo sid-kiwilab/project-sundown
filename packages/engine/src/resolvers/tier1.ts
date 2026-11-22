@@ -96,18 +96,31 @@ export async function resolveTier1(
     sources.push("npm registry");
     if (npm.status === "deprecated") {
       best = { ...npm, checked: true, checkSource: sources.join(" + ") };
+    } else if (
+      npm.status === "healthy" &&
+      best.status !== "deprecated" &&
+      best.status !== "dead"
+    ) {
+      best = { ...npm, checked: true, checkSource: "npm registry" };
     }
 
     const py = await resolvePyPiPackage(finding, ctx.fetchImpl);
     sources.push("PyPI");
     if (py.status === "deprecated" && best.status !== "deprecated") {
       best = { ...py, checked: true, checkSource: sources.join(" + ") };
+    } else if (
+      py.status === "healthy" &&
+      best.status !== "deprecated" &&
+      best.status !== "dead"
+    ) {
+      best = { ...py, checked: true, checkSource: "PyPI" };
     }
 
     patch = {
       ...best,
       checked: true,
-      checkSource: [...new Set(sources)].join(" + "),
+      checkSource:
+        best.checkSource ?? [...new Set(sources)].join(" + "),
     };
     if (!patch.status) {
       patch.status = "no_notice_found";
@@ -150,6 +163,12 @@ export async function resolveTier1(
     !merged.sourceQuote
   ) {
     merged.confidence = "unverified";
+  } else if (
+    merged.status === "healthy" &&
+    merged.sourceUrl &&
+    merged.confidence !== "official-page"
+  ) {
+    merged.confidence = "official-data";
   } else if (hasOfficialTier1Evidence(merged)) {
     merged.confidence = "official-data";
   }

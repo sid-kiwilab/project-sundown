@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Sundown — expiry audit",
-  description: "Paste a public GitHub repo. See what dies when.",
+  title: "Sundown | expiry audit",
+  description: "Scan a public GitHub repo for deprecations and expiry dates.",
 };
 
 export default function RootLayout({

@@ -5,9 +5,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        alarm: "#ff2d2d",
-        surface: "#0a0a0c",
-        panel: "#121216",
+        urgent: "#b45309",
+        surface: "#f6f5f3",
+        panel: "#ffffff",
+        line: "#e4e2de",
+        ink: "#1a1917",
+        muted: "#6b6560",
       },
     },
   },

@@ -13,7 +13,15 @@ export type {
 export { scan } from "./scan.js";
 export { walkRepo } from "./walk.js";
 export { loadRegistry, resolveRegistryPath, countRegistryProviders } from "./registry.js";
-export { buildReport, sortFindings, isDateNotVerified } from "./report.js";
+export {
+  buildReport,
+  sortFindings,
+  isDateNotVerified,
+  isAlarmFinding,
+  isEnvHintFinding,
+  partitionReportFindings,
+  ALARM_STATUSES,
+} from "./report.js";
 export { computeCoverage, buildStandBehindLine } from "./coverage.js";
 export { resolveAllTier1 } from "./resolvers/tier1.js";
 export { resolveAllTier2 } from "./resolvers/tier2.js";
