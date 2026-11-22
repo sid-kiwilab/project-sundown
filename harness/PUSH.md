@@ -19,14 +19,6 @@ npm run build
 npm run lint
 ```
 
-If this pass touches **`apps/web`** or Vercel config, also run from `apps/web` (after `vercel link` or `vercel pull` once):
-
-```bash
-vercel build
-```
-
-`npm run build` does not run Vercel’s post-`next build` packaging step. Do not commit fake `.next/export-detail.json` files — `success: false` triggers `NEXT_EXPORT_FAILED`.
-
 If the monorepo uses per-package scripts only, run the workspace build/lint Sid documents in [docs/LIVE.md](../docs/LIVE.md) — same gate: all packages touched by this pass must pass.
 
 Fail → drop **FIX.md** (or Build), fix, re-run **SYNC** if docs needed, then **PUSH** again. Do not commit a broken tree.

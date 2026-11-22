@@ -18,7 +18,7 @@ Local dev: [README.md](../README.md). Session history: [JOURNAL.md](JOURNAL.md).
 | Stack | Monorepo: `packages/engine` (pure TS), `packages/cli`, `apps/web` (Next.js App Router, Tailwind); Upstash Redis on hosted site |
 | App root | `apps/web/` |
 | Dev (web) | **Shipped (local)** — `start.bat` or `npm run dev` → **http://localhost:3000**; paste public `github.com/owner/repo` |
-| Web (Vercel) | **Config shipped** — Root Directory **`apps/web`** + [`apps/web/vercel.json`](../apps/web/vercel.json); Tier 2 from deployment env; owner connects GitHub → prod |
+| Web (Vercel) | **Owner reconnects** — Root Directory **`apps/web`**, Framework **Next.js**, Output Directory **empty**; [`apps/web/vercel.json`](../apps/web/vercel.json) install/build only. No `export-detail` stubs. |
 | CLI (local) | **Shipped (workspace)** — `@sundown/engine` + `sundown-cli`; `npm run build:engine && npm run build:cli` then `npm run sundown -- [path]` (reads repo-root `.env` via engine) |
 | CLI (npm) | *Pending publish* — `npx sundown-cli` after `npm publish` on `sundown-cli` |
 | Backend (hosted) | Scan API, credits, cache — Vercel + KV |
@@ -300,7 +300,7 @@ npm run lint     # tsc --noEmit on @sundown/engine and @sundown/web
 
 - [x] Initialize git + GitHub repo `sid-kiwilab/project-sundown`
 - [ ] Publish `sundown-cli` to npm
-- [ ] Vercel project — import repo, Root Directory **`apps/web`**, env from `.env.example` (no KV yet)
+- [ ] Vercel: new/reconnect project — Root **`apps/web`**, Framework **Next.js**, **no** Output Directory override, env from `.env.example`
 - [ ] Set `credits:remaining` + `CONTACT_URL` (when KV ships)
 - [ ] `npm run build` clean before prod (PUSH)
 - [ ] Owner: confirm public scan on prod + CLI Tier 2 from `.env` (`gpt-image-2` fixture)

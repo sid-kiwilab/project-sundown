@@ -70,7 +70,6 @@ export function resolveSundownRegistryPath(
   for (const start of searchFrom) {
     const s = path.resolve(start);
     registryDirs.add(path.join(s, "registry"));
-    registryDirs.add(path.join(s, "sundown-registry"));
     registryDirs.add(path.join(s, "..", "registry"));
     registryDirs.add(path.join(s, "../..", "registry"));
     registryDirs.add(path.join(s, "../../..", "registry"));

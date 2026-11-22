@@ -4,6 +4,12 @@ Newest first. Stable ops + product spec: [LIVE.md](LIVE.md).
 
 ---
 
+## 2026-11-22 — Drop Vercel packaging workarounds (SYNC)
+
+- **Reverted:** post-`next build` `export-detail.json` stubs, `prebuild`/`build.mjs`, `stage-registry-for-web`, `docs/VERCEL.md`, `outputFileTracingRoot` toggles, extra `framework` in `vercel.json`. Tree matches **`040fd66`** plus clone/CLI `.env` work.
+- **Why:** Vercel’s packager (`lstat export-detail.json`) is a platform/project-settings issue; those hacks caused `NEXT_EXPORT_FAILED` / `cwd` crashes. Owner reconnects Vercel manually (Framework Next.js, Output Directory empty).
+- **Key files restored:** `apps/web/vercel.json`, `apps/web/next.config.ts`, `apps/web/package.json` (`next build` only).
+
 ## 2026-11-22 — Clone + Vercel-ready (PLAN → Build → REVIEW → FIX → SYNC)
 
 - **Shipped:** `@sundown/engine` `dotenv.ts` — `applyRootDotenv` (workspace `.env` only), `resolveSundownRegistryPath` with multi-anchor search + throw; CLI loads keys from Sundown root before `scan()`; web registry via `import.meta.url` + traced `registry/**/*.json` in `next.config.ts`; [`apps/web/vercel.json`](../apps/web/vercel.json); honest README + `docs/assets/cli-report.svg`; landing copy = server env on Vercel.
