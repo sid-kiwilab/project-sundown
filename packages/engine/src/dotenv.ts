@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const SOURCES_MARKER = path.join("registry", "sources.json");
 
@@ -30,7 +31,21 @@ export function findMonorepoRoot(start = process.cwd()): string {
 
 export type ResolveSundownRegistryOptions = {
   searchFrom?: string[];
+  /**
+   * Also look next to this engine module (`dist/../registry`).
+   * Needed for `npx sundown-cli` after npm publish. Default true.
+   */
+  includeBundled?: boolean;
 };
+
+function engineModuleRegistryDirs(): string[] {
+  const here = path.dirname(fileURLToPath(import.meta.url));
+  return [
+    path.join(here, "..", "registry"),
+    path.join(here, "..", "..", "registry"),
+    path.join(here, "..", "..", "..", "registry"),
+  ];
+}
 
 /** Path to bundled `registry/` next to Sundown workspace (not the scan target). */
 export function resolveSundownRegistryPath(
@@ -49,6 +64,11 @@ export function resolveSundownRegistryPath(
   const explicitSearch =
     typeof options === "string" ||
     (typeof options === "object" && Boolean(options?.searchFrom?.length));
+
+  const includeBundled =
+    typeof options === "object" && options?.includeBundled === false
+      ? false
+      : true;
 
   const searchFrom: string[] =
     typeof options === "string"
@@ -78,6 +98,11 @@ export function resolveSundownRegistryPath(
     registryDirs.add(path.join(process.cwd(), "registry"));
     registryDirs.add(path.join(process.cwd(), "..", "registry"));
     registryDirs.add(path.join(process.cwd(), "../..", "registry"));
+  }
+  if (includeBundled) {
+    for (const dir of engineModuleRegistryDirs()) {
+      registryDirs.add(dir);
+    }
   }
 
   for (const reg of registryDirs) {

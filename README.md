@@ -23,7 +23,7 @@ npm test
 
 **Web:** [project-sundown-nine.vercel.app](https://project-sundown-nine.vercel.app/) — paste a **public** `https://github.com/owner/repo` URL on the landing page.
 
-**npm:** `npx sundown-cli` is not published yet — use `npm run sundown --` from this repo until release.
+**npm:** packaging is ready (`@sundown/engine` + `sundown-cli` 0.1.0). Until those versions are on the registry, use `npm run sundown -- .` from this repo. After publish: `npx sundown-cli .`
 
 Reports show **checked N of M** — “checked” means we queried a named source for that row (no notice on that page still counts). npm/PyPI pins with no deprecation flag show **`healthy`**, not “unverified”. The web UI leads with expiring rows; the CLI prints an **ALARMS** section first. API host rows stay unchecked.
 

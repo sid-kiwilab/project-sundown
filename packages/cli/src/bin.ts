@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   applyRootDotenv,
+  resolveSundownRegistryPath,
   scan,
   type Finding,
   type ScanReport,
@@ -38,7 +39,9 @@ function parseArgs(argv: string[]) {
 
 function resolveRegistryFromCli(): string {
   const here = path.dirname(fileURLToPath(import.meta.url));
-  return path.resolve(here, "../../../registry");
+  return resolveSundownRegistryPath({
+    searchFrom: [here, path.resolve(here, ".."), process.cwd()],
+  });
 }
 
 function shouldFail(finding: Finding, failOnDays: number): boolean {
@@ -127,6 +130,7 @@ async function maybeCreateIssue(report: ScanReport): Promise<void> {
 async function main(): Promise<number> {
   const registryPath = resolveRegistryFromCli();
   applyRootDotenv({ root: path.dirname(registryPath) });
+  applyRootDotenv({ root: process.cwd() });
 
   const { target, json, issue, failOnDays } = parseArgs(process.argv);
   const absTarget = path.resolve(process.cwd(), target);

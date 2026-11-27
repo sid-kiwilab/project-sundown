@@ -46,3 +46,9 @@ next-env.d.ts
 # python (docs/assets hook scripts)
 __pycache__/
 *.py[cod]
+
+# copied into the engine tarball on build (source of truth is /registry)
+packages/engine/registry/
+
+# npm pack output
+*.tgz

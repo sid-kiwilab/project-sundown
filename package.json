@@ -15,6 +15,7 @@
     "build:cli": "npm run build -w sundown-cli",
     "build:web": "npm run build -w @sundown/web",
     "sundown": "node packages/cli/dist/bin.js",
+    "pack:cli": "npm run build:engine && npm run build:cli && npm pack -w @sundown/engine && npm pack -w sundown-cli",
     "dev:web": "npm run dev -w @sundown/web",
     "dev": "node scripts/dev.mjs",
     "start": "node scripts/dev.mjs"

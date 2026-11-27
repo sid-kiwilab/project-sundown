@@ -35,8 +35,18 @@ describe("resolveSundownRegistryPath", () => {
   it("throws when registry cannot be found", () => {
     const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "sundown-none-"));
     expect(() =>
-      resolveSundownRegistryPath({ searchFrom: [tmp] }),
+      resolveSundownRegistryPath({
+        searchFrom: [tmp],
+        includeBundled: false,
+      }),
     ).toThrow(/Could not find Sundown registry/);
+    fs.rmSync(tmp, { recursive: true, force: true });
+  });
+
+  it("falls back to engine-adjacent registry when searchFrom is empty of sources", () => {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "sundown-npx-"));
+    const reg = resolveSundownRegistryPath({ searchFrom: [tmp] });
+    expect(fs.existsSync(path.join(reg, "sources.json"))).toBe(true);
     fs.rmSync(tmp, { recursive: true, force: true });
   });
 });

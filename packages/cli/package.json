@@ -1,7 +1,30 @@
 {
   "name": "sundown-cli",
   "version": "0.1.0",
+  "description": "Expiry-date audit for a repo — models, APIs, packages, runtimes, SaaS.",
+  "license": "MIT",
+  "author": "Sid Venkatesh",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sid-venkatesh/project-sundown.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://project-sundown-nine.vercel.app/",
+  "bugs": {
+    "url": "https://github.com/sid-venkatesh/project-sundown/issues"
+  },
+  "keywords": [
+    "deprecation",
+    "eol",
+    "npm",
+    "audit",
+    "sundown",
+    "cli"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
   "bin": {
     "sundown": "./dist/bin.js",
     "sundown-cli": "./dist/bin.js"
@@ -11,7 +34,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@sundown/engine": "0.1.0"

@@ -1,7 +1,31 @@
 {
   "name": "@sundown/engine",
   "version": "0.1.0",
+  "description": "Sundown scan engine — expiry audit for models, APIs, packages, runtimes, SaaS.",
+  "license": "MIT",
+  "author": "Sid Venkatesh",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sid-venkatesh/project-sundown.git",
+    "directory": "packages/engine"
+  },
+  "homepage": "https://github.com/sid-venkatesh/project-sundown",
+  "bugs": {
+    "url": "https://github.com/sid-venkatesh/project-sundown/issues"
+  },
+  "keywords": [
+    "deprecation",
+    "eol",
+    "audit",
+    "sundown"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -16,16 +40,20 @@
     "./report": {
       "types": "./dist/report.d.ts",
       "import": "./dist/report.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "files": [
-    "dist"
+    "dist",
+    "registry"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "copy-registry": "node ../../scripts/copy-registry.mjs",
+    "build": "npm run copy-registry && tsc -p tsconfig.json",
     "lint": "tsc -p tsconfig.json --noEmit",
     "test": "npm run build && vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "fast-glob": "^3.3.2"
