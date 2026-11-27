@@ -21,6 +21,6 @@ export function applyRegistryOverride(
     status,
     confidence: "official-data",
     sourceQuote: entry.note.trim(),
-    sourceUrl: "https://github.com/sid-kiwilab/project-sundown/tree/main/registry/packages.json",
+    sourceUrl: "https://github.com/sid-venkatesh/project-sundown/tree/main/registry/packages.json",
   };
 }

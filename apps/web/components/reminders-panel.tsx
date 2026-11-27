@@ -4,7 +4,7 @@ import { useState } from "react";
 import { CONSUMER_SUNDOWN_WORKFLOW } from "@/lib/consumer-sundown-workflow";
 
 const README_REMINDERS =
-  "https://github.com/sid-kiwilab/project-sundown#reminders-github-action";
+  "https://github.com/sid-venkatesh/project-sundown#reminders-github-action";
 
 export function RemindersPanel({
   showTitle = true,

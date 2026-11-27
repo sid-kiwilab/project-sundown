@@ -13,18 +13,18 @@ Local dev: [README.md](../README.md). Session history: [JOURNAL.md](JOURNAL.md).
 | Item | Value |
 |------|--------|
 | Path | `c:\flutter_apps\project_sundown` |
-| Repo | [sid-kiwilab/project-sundown](https://github.com/sid-kiwilab/project-sundown) |
+| Repo | [sid-venkatesh/project-sundown](https://github.com/sid-venkatesh/project-sundown) |
 | Product | Open-source repo + npm CLI + optional GitHub Action + Vercel demo (public repo paste) |
 | Stack | Monorepo: `packages/engine` (pure TS), `packages/cli`, `apps/web` (Next.js App Router, Tailwind); Upstash Redis on hosted site |
 | App root | `apps/web/` |
 | Dev (web) | **Shipped (local)** — `start.bat` or `npm run dev` → **http://localhost:3000**; paste public `github.com/owner/repo` |
-| Web (Vercel) | **Owner reconnects** — Root **`apps/web`**, Framework **Next.js**, Output Directory **empty**, Build Command **empty**. [`apps/web/vercel.json`](../apps/web/vercel.json): install = monorepo `npm install` + `build:engine`. NFT includes `../../registry/**/*.json`. |
+| Web (Vercel) | **Shipped** — [project-sundown-nine.vercel.app](https://project-sundown-nine.vercel.app/). Root **`apps/web`**, Framework **Next.js**, Output Directory **empty**, Build Command **empty**. [`apps/web/vercel.json`](../apps/web/vercel.json): install = monorepo `npm install` + `build:engine`. NFT includes `../../registry/**/*.json`. Git: **sid-venkatesh/project-sundown**. |
 | CLI (local) | **Shipped (workspace)** — `@sundown/engine` + `sundown-cli`; `npm run build:engine && npm run build:cli` then `npm run sundown -- [path]` (reads repo-root `.env` via engine) |
 | CLI (npm) | *Pending publish* — `npx sundown-cli` after `npm publish` on `sundown-cli` |
 | Backend (hosted) | Scan API, credits, cache — Vercel + KV |
 | Env (hosted) | `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` (optional), `KV_*`, `ADMIN_SECRET`, `CONTACT_URL`, optional `GITHUB_TOKEN` (archived-repo limits) |
 | Env (CLI) | User’s `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` for Tier 2/3; `GITHUB_TOKEN` for `--issue` |
-| Production URL | Unset |
+| Production URL | [https://project-sundown-nine.vercel.app/](https://project-sundown-nine.vercel.app/) |
 | Accent | Light neutral UI in `apps/web` (warm off-white; urgency on rows only, not chrome) |
 | License | MIT |
 
@@ -33,7 +33,8 @@ Local dev: [README.md](../README.md). Session history: [JOURNAL.md](JOURNAL.md).
 | Setting | Value |
 |---------|--------|
 | Branch | `main` (default when initialized) |
-| `origin` | `https://github.com/sid-kiwilab/project-sundown.git` |
+| `origin` | `https://github.com/sid-venkatesh/project-sundown.git` |
+| Production web | [project-sundown-nine.vercel.app](https://project-sundown-nine.vercel.app/) |
 
 ### Session workflow
 
@@ -70,7 +71,7 @@ Agent harness in [`harness/`](../harness/) — ported from **siddharth_venkatesh
 | `registry/sources.json` | Official deprecation page URLs |
 | `registry/packages.json` | Manual overrides for known dead services |
 | `.github/actions/sundown/` | Composite Action: build engine/CLI, scan `$GITHUB_WORKSPACE`, `npm run sundown -- . --issue` |
-| `.github/workflows/sundown.yml` | Example weekly cron on this repo (copy or call remote `uses: sid-kiwilab/project-sundown/.github/actions/sundown@main`) |
+| `.github/workflows/sundown.yml` | Example weekly cron on this repo (copy or call remote `uses: sid-venkatesh/project-sundown/.github/actions/sundown@main`) |
 
 ---
 
@@ -300,7 +301,7 @@ npm run lint     # tsc --noEmit on @sundown/engine and @sundown/web
 
 ## Deploy checklist
 
-- [x] Initialize git + GitHub repo `sid-kiwilab/project-sundown`
+- [x] Initialize git + GitHub repo `sid-venkatesh/project-sundown`
 - [ ] Publish `sundown-cli` to npm
 - [ ] Vercel reconnect — Root **`apps/web`**, Framework **Next.js**, Output Directory **empty**, Build Command **empty**, env from `.env.example`
 - [ ] Set `credits:remaining` + `CONTACT_URL` (when KV ships)

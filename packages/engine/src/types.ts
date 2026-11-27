@@ -104,7 +104,7 @@ export type ScanOptions = {
 };
 
 export const ADD_SOURCE_ISSUE_BASE =
-  "https://github.com/sid-kiwilab/project-sundown/issues/new";
+  "https://github.com/sid-venkatesh/project-sundown/issues/new";
 
 export function addSourceIssueUrl(label: string): string {
   const title = encodeURIComponent(`Add source for ${label}`);

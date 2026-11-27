@@ -8,10 +8,10 @@ Origin: OpenAI’s **gpt-image-2** deprecation notice sat in email for weeks unn
 
 LinkedIn hook (calm email vs alarm mock): [`docs/assets/hook/linkedin-hook-composite.png`](docs/assets/hook/linkedin-hook-composite.png) — regenerate via [`docs/assets/hook/README.md`](docs/assets/hook/README.md).
 
-Repo: [sid-kiwilab/project-sundown](https://github.com/sid-kiwilab/project-sundown) — full spec in [docs/LIVE.md](docs/LIVE.md).
+**Live demo:** [project-sundown-nine.vercel.app](https://project-sundown-nine.vercel.app/) · Repo: [sid-venkatesh/project-sundown](https://github.com/sid-venkatesh/project-sundown) — full spec in [docs/LIVE.md](docs/LIVE.md).
 
 ```bash
-git clone https://github.com/sid-kiwilab/project-sundown.git
+git clone https://github.com/sid-venkatesh/project-sundown.git
 cd project-sundown
 npm install
 cp .env.example .env          # optional: OPENROUTER_API_KEY for Tier 2 model notices
@@ -21,7 +21,7 @@ npm run dev                   # or start.bat (Windows) → http://localhost:3000
 npm test
 ```
 
-**Web:** paste a **public** `https://github.com/owner/repo` URL on the landing page.
+**Web:** [project-sundown-nine.vercel.app](https://project-sundown-nine.vercel.app/) — paste a **public** `https://github.com/owner/repo` URL on the landing page.
 
 **npm:** `npx sundown-cli` is not published yet — use `npm run sundown --` from this repo until release.
 
@@ -72,7 +72,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: sid-kiwilab/project-sundown/.github/actions/sundown@main
+      - uses: sid-venkatesh/project-sundown/.github/actions/sundown@main
         with:
           openrouter-api-key: ${{ secrets.OPENROUTER_API_KEY }}
 ```

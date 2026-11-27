@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: sid-kiwilab/project-sundown/.github/actions/sundown@main
+      - uses: sid-venkatesh/project-sundown/.github/actions/sundown@main
         with:
           openrouter-api-key: \${{ secrets.OPENROUTER_API_KEY }}
 `;

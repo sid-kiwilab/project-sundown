@@ -112,7 +112,7 @@ async function callLlm(system: string, user: string): Promise<string> {
       "https://openrouter.ai/api/v1/chat/completions",
       openRouter,
       process.env.SUNDOWN_LLM_MODEL ?? "openai/gpt-4o-mini",
-      { "HTTP-Referer": "https://github.com/sid-kiwilab/project-sundown" },
+      { "HTTP-Referer": "https://github.com/sid-venkatesh/project-sundown" },
       system,
       user,
     );

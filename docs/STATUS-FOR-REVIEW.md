@@ -1,7 +1,7 @@
 # Sundown — current state (for external review)
 
 **Date:** 2026-11-21  
-**Repo:** [sid-kiwilab/project-sundown](https://github.com/sid-kiwilab/project-sundown)  
+**Repo:** [sid-venkatesh/project-sundown](https://github.com/sid-venkatesh/project-sundown)  
 **Purpose of this doc:** Single snapshot of what we are building, what is implemented locally, what we changed this session, and known limits — so another model (e.g. Claude) can critique architecture and recall expectations.
 
 Spec of record for product goals remains [LIVE.md](./LIVE.md). This file is an **as-built + in-flight** supplement.
@@ -131,7 +131,7 @@ Spec (LIVE): web search + fetch for unknown SaaS / vendors not in `sources.json`
 
 ### Tier 2 “running” but everything stayed `unverified`
 
-Observed on scans like `sid-kiwilab/youtube-thumbnail-generator` — Tier 2 enabled but all models `no_notice_found`.
+Observed on scans like `sid-venkatesh/youtube-thumbnail-generator` — Tier 2 enabled but all models `no_notice_found`.
 
 Root causes (not “we need Firecrawl for OpenAI”):
 
@@ -268,7 +268,7 @@ npm install
 # Put OPENROUTER_API_KEY (or OpenAI/Anthropic) in repo root .env
 start.bat   # or: npm run build:engine && npm run dev -w @sundown/web
 # Browser: http://localhost:3000
-# Paste: https://github.com/sid-kiwilab/youtube-thumbnail-generator
+# Paste: https://github.com/sid-venkatesh/youtube-thumbnail-generator
 npm test
 ```
 

@@ -4,6 +4,12 @@ Newest first. Stable ops + product spec: [LIVE.md](LIVE.md).
 
 ---
 
+## 2026-11-28 — GitHub org + production URL (SYNC → PUSH)
+
+- **Shipped:** Canonical repo **sid-venkatesh/project-sundown** (was sid-kiwilab); production demo **project-sundown-nine.vercel.app** in README + LIVE; remote `uses:` for consumer Action YAML + web reminders link; engine OpenRouter referer + issue/override URLs.
+- **Key files:** `README.md`, `docs/LIVE.md`, `apps/web/**`, `packages/engine/src/{llm,types,resolvers/overrides}.ts`, `docs/STATUS-FOR-REVIEW.md`.
+- **Gaps:** GitHub About field + Vercel Git connector are owner dashboard; npm publish still pending.
+
 ## 2026-11-27 — LinkedIn email hook assets (REVIEW → FIX → SYNC)
 
 - **Shipped:** Post image [`docs/assets/hook/linkedin-hook-composite.png`](assets/hook/linkedin-hook-composite.png) (“What I got” / “What I needed”); repo-local regen scripts under `docs/assets/` + [`hook/README.md`](assets/hook/README.md). OpenAI alarm header via `gpt-image-2.5-sunburst` (`gen-alarm-hook-openai.py`, needs `OPENAI_API_KEY`).
@@ -72,7 +78,7 @@ Newest first. Stable ops + product spec: [LIVE.md](LIVE.md).
 
 ## 2026-11-21 — Git remote + initial push
 
-- **Shipped:** Local git with **repo-only** identity `sid-kiwilab` (not global agentic-systems user). `origin` → `sid-kiwilab/project-sundown`. MIT `LICENSE`, monorepo `.gitignore`.
+- **Shipped:** Local git with **repo-only** identity. `origin` → `sid-venkatesh/project-sundown` (moved from `sid-kiwilab`). MIT `LICENSE`, monorepo `.gitignore`.
 - **Gaps:** *(superseded — see engine + CLI entry above.)*
 
 ## 2026-11-21 — Harness V2 + LIVE (greenfield)

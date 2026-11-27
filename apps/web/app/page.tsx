@@ -147,7 +147,7 @@ export default function HomePage() {
         Private repos: run{" "}
         <code className="text-ink/70">npm run sundown -- .</code> locally (
         <a
-          href="https://github.com/sid-kiwilab/project-sundown"
+          href="https://github.com/sid-venkatesh/project-sundown"
           className="text-ink/70 underline decoration-line underline-offset-2 hover:text-ink"
         >
           sundown-cli
