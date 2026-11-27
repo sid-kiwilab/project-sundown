@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { ScanReport } from "@sundown/engine/types";
+import type { ScanReport } from "sundown-engine/types";
 import Link from "next/link";
 import { ReportView } from "@/components/report-view";
 

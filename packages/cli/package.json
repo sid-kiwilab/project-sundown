@@ -38,7 +38,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@sundown/engine": "0.1.0"
+    "sundown-engine": "0.1.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",

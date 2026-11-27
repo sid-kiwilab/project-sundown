@@ -6,16 +6,16 @@
     "apps/*"
   ],
   "scripts": {
-    "test": "npm run test -w @sundown/engine",
+    "test": "npm run test -w sundown-engine",
     "build": "npm run build:engine && npm run build:cli && npm run build:web",
     "lint": "npm run lint:engine && npm run lint:web",
-    "lint:engine": "npm run lint -w @sundown/engine",
+    "lint:engine": "npm run lint -w sundown-engine",
     "lint:web": "npm run lint -w @sundown/web",
-    "build:engine": "npm run build -w @sundown/engine",
+    "build:engine": "npm run build -w sundown-engine",
     "build:cli": "npm run build -w sundown-cli",
     "build:web": "npm run build -w @sundown/web",
     "sundown": "node packages/cli/dist/bin.js",
-    "pack:cli": "npm run build:engine && npm run build:cli && npm pack -w @sundown/engine && npm pack -w sundown-cli",
+    "pack:cli": "npm run build:engine && npm run build:cli && npm pack -w sundown-engine && npm pack -w sundown-cli",
     "dev:web": "npm run dev -w @sundown/web",
     "dev": "node scripts/dev.mjs",
     "start": "node scripts/dev.mjs"

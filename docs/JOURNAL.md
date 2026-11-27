@@ -6,7 +6,7 @@ Newest first. Stable ops + product spec: [LIVE.md](LIVE.md).
 
 ## 2026-11-28 — npm packaging for sundown-cli (SYNC)
 
-- **Shipped:** Engine copies `registry/*.json` into `packages/engine/registry` on build; tarball `files` include that folder. CLI resolves registry via `resolveSundownRegistryPath` (monorepo walk + engine-adjacent fallback) so `npx` works without this git checkout. Package metadata + `publishConfig.access: public` on `@sundown/engine`.
+- **Shipped:** Engine copies `registry/*.json` into `packages/engine/registry` on build; tarball `files` include that folder. CLI resolves registry via `resolveSundownRegistryPath` (monorepo walk + engine-adjacent fallback) so `npx` works without this git checkout. Published names: unscoped **`sundown-engine`** + **`sundown-cli`** (npm user `sid-venkatesh`, no org).
 - **Key files:** `scripts/copy-registry.mjs`, `packages/engine/src/dotenv.ts`, `packages/cli/src/bin.ts`, `packages/*/package.json`, `packages/cli/README.md`.
 - **Gaps:** owner `npm login`; create `@sundown` org if missing; publish engine then CLI. Honest 0.1.0: Actions/API hosts/unmapped Docker still limited.
 

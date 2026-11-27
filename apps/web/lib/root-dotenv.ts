@@ -2,4 +2,4 @@ export {
   findMonorepoRoot,
   applyRootDotenv,
   hasLlmEnvKey,
-} from "@sundown/engine";
+} from "sundown-engine";

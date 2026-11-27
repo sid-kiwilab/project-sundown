@@ -7,7 +7,7 @@ import {
   scan,
   type Finding,
   type ScanReport,
-} from "@sundown/engine";
+} from "sundown-engine";
 import { printTable } from "./table.js";
 import {
   issueBody,

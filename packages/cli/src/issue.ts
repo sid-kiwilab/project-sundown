@@ -1,5 +1,5 @@
-import type { Finding, ScanReport } from "@sundown/engine";
-import { partitionReportFindings } from "@sundown/engine";
+import type { Finding, ScanReport } from "sundown-engine";
+import { partitionReportFindings } from "sundown-engine";
 
 export const SUNDOWN_ISSUE_TITLE = "Sundown: dependency expiry alarm";
 

@@ -4,7 +4,7 @@ Local dev: [README.md](../README.md). Session history: [JOURNAL.md](JOURNAL.md).
 
 **One-liner:** Point it at a repo; find everything with an end date (LLM models, APIs, packages, runtimes, SaaS); check official sources; report loudly what dies when.
 
-**Brand / npm:** Sundown · `sundown-cli` (`npx sundown-cli .` and global `sundown` bin when installed).
+**Brand / npm:** Sundown · `sundown-cli` (`npx sundown-cli .` and global `sundown` bin when installed). Engine package: `sundown-engine`.
 
 ---
 
@@ -19,8 +19,8 @@ Local dev: [README.md](../README.md). Session history: [JOURNAL.md](JOURNAL.md).
 | App root | `apps/web/` |
 | Dev (web) | **Shipped (local)** — `start.bat` or `npm run dev` → **http://localhost:3000**; paste public `github.com/owner/repo` |
 | Web (Vercel) | **Shipped** — [project-sundown-nine.vercel.app](https://project-sundown-nine.vercel.app/). Root **`apps/web`**, Framework **Next.js**, Output Directory **empty**, Build Command **empty**. [`apps/web/vercel.json`](../apps/web/vercel.json): install = monorepo `npm install` + `build:engine`. NFT includes `../../registry/**/*.json`. Git: **sid-venkatesh/project-sundown**. |
-| CLI (local) | **Shipped (workspace)** — `@sundown/engine` + `sundown-cli`; `npm run build:engine && npm run build:cli` then `npm run sundown -- [path]` (reads repo-root `.env` via engine) |
-| CLI (npm) | **Packaging ready** — `npx sundown-cli` after `npm publish -w @sundown/engine --access public` then `-w sundown-cli`. Needs npm login; scoped engine needs an `@sundown` org (or publish fails). |
+| CLI (local) | **Shipped (workspace)** — `sundown-engine` + `sundown-cli`; `npm run build:engine && npm run build:cli` then `npm run sundown -- [path]` (reads repo-root `.env` via engine) |
+| CLI (npm) | **Unscoped** `sundown-engine` + `sundown-cli` (no `@sundown` org). Publish: `npm publish -w sundown-engine` then `-w sundown-cli`. |
 | Backend (hosted) | Scan API, credits, cache — Vercel + KV |
 | Env (hosted) | `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` (optional), `KV_*`, `ADMIN_SECRET`, `CONTACT_URL`, optional `GITHUB_TOKEN` (archived-repo limits) |
 | Env (CLI) | User’s `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` for Tier 2/3; `GITHUB_TOKEN` for `--issue` |
@@ -294,7 +294,7 @@ Owner verifies `http://localhost:3000` in the browser. Agents do not fetch local
 
 ```bash
 npm run build    # engine + CLI + web
-npm run lint     # tsc --noEmit on @sundown/engine and @sundown/web
+npm run lint     # tsc --noEmit on sundown-engine and @sundown/web
 ```
 
 ---
@@ -302,8 +302,8 @@ npm run lint     # tsc --noEmit on @sundown/engine and @sundown/web
 ## Deploy checklist
 
 - [x] Initialize git + GitHub repo `sid-venkatesh/project-sundown`
-- [x] Package `sundown-cli` + `@sundown/engine` for npm (registry bundled in engine tarball)
-- [ ] Owner: `npm login` + create `@sundown` org if needed + `npm publish -w @sundown/engine --access public` then `-w sundown-cli`
+- [x] Package `sundown-cli` + `sundown-engine` for npm (registry bundled in engine tarball)
+- [ ] Owner: `npm login` in a terminal (website login is not the CLI) + `npm publish -w sundown-engine` then `-w sundown-cli`
 - [ ] Vercel reconnect — Root **`apps/web`**, Framework **Next.js**, Output Directory **empty**, Build Command **empty**, env from `.env.example`
 - [ ] Set `credits:remaining` + `CONTACT_URL` (when KV ships)
 - [ ] `npm run build` clean before prod (PUSH)

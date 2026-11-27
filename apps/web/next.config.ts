@@ -6,7 +6,7 @@ const monorepoRoot = path.join(__dirname, "../..");
 loadEnvConfig(monorepoRoot);
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["@sundown/engine"],
+  transpilePackages: ["sundown-engine"],
   // `tar.x` in /api/scan: Vercel NFT + packager lstat's .next/export-detail.json (ENOENT).
   serverExternalPackages: ["tar"],
   outputFileTracingRoot: monorepoRoot,

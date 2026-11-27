@@ -1,11 +1,11 @@
 "use client";
 
 import type { ReactNode } from "react";
-import type { Finding, ScanReport } from "@sundown/engine/types";
+import type { Finding, ScanReport } from "sundown-engine/types";
 import {
   isDateNotVerified,
   partitionReportFindings,
-} from "@sundown/engine/report";
+} from "sundown-engine/report";
 
 function statusLabel(f: Finding): string {
   if (f.status === "healthy") return "healthy";

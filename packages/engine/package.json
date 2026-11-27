@@ -1,5 +1,5 @@
 {
-  "name": "@sundown/engine",
+  "name": "sundown-engine",
   "version": "0.1.0",
   "description": "Sundown scan engine — expiry audit for models, APIs, packages, runtimes, SaaS.",
   "license": "MIT",
@@ -22,9 +22,6 @@
   ],
   "engines": {
     "node": ">=18"
-  },
-  "publishConfig": {
-    "access": "public"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

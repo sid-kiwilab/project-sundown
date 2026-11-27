@@ -20,7 +20,7 @@ Origin story: OpenAI’s **gpt-image-2** deprecation sat in email for weeks unno
 
 | Path | Role |
 |------|------|
-| `packages/engine` | Pure TS scan pipeline (no framework). Published as `@sundown/engine`. |
+| `packages/engine` | Pure TS scan pipeline (no framework). Published as `sundown-engine`. |
 | `packages/cli` | Thin CLI (`sundown-cli`, workspace: `npm run sundown -- .`). |
 | `apps/web` | Next.js 15 App Router — landing + `POST /api/scan`. |
 | `registry/` | `models.json`, `sources.json`, `packages.json` (patterns, official URLs, manual overrides). |
@@ -38,7 +38,7 @@ Origin story: OpenAI’s **gpt-image-2** deprecation sat in email for weeks unno
 
 1. User pastes `https://github.com/owner/repo` (public only).
 2. `POST /api/scan` downloads a tarball (`lib/github-tarball.ts`, retries, optional `GITHUB_TOKEN`).
-3. `scan()` from `@sundown/engine` with monorepo `registry/` and optional Tier 2 LLM.
+3. `scan()` from `sundown-engine` with monorepo `registry/` and optional Tier 2 LLM.
 4. JSON report rendered in the browser (list rows: kind, status, days, confidence, checked — hover for source).
 
 ### CLI (workspace)

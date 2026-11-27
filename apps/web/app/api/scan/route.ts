@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createDefaultBatchLlmReader, scan } from "@sundown/engine";
+import { createDefaultBatchLlmReader, scan } from "sundown-engine";
 import { downloadPublicRepo } from "@/lib/github-tarball";
 import { parseGitHubRepoUrl } from "@/lib/parse-repo";
 import { monorepoRegistryPath } from "@/lib/registry-path";

@@ -1,8 +1,8 @@
-import type { Finding, ScanReport } from "@sundown/engine";
+import type { Finding, ScanReport } from "sundown-engine";
 import {
   isDateNotVerified,
   partitionReportFindings,
-} from "@sundown/engine";
+} from "sundown-engine";
 
 function statusLabel(f: Finding): string {
   if (f.status === "healthy") return "healthy";

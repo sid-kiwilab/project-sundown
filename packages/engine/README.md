@@ -1,4 +1,4 @@
-# @sundown/engine
+# sundown-engine
 
 Scan engine for [sundown-cli](https://www.npmjs.com/package/sundown-cli). You usually want the CLI, not this package directly.
 
