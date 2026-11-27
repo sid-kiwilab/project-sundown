@@ -4,6 +4,12 @@ Newest first. Stable ops + product spec: [LIVE.md](LIVE.md).
 
 ---
 
+## 2026-11-27 — LinkedIn email hook assets (REVIEW → FIX → SYNC)
+
+- **Shipped:** Post image [`docs/assets/hook/linkedin-hook-composite.png`](assets/hook/linkedin-hook-composite.png) (“What I got” / “What I needed”); repo-local regen scripts under `docs/assets/` + [`hook/README.md`](assets/hook/README.md). OpenAI alarm header via `gpt-image-2.5-sunburst` (`gen-alarm-hook-openai.py`, needs `OPENAI_API_KEY`).
+- **Key files:** `docs/assets/hook/*`, `hook_paths.py`, `compose-email-hook-stack.py`, `crop-original-email.py`, `recrop-alarm-hook.py`, `gen-alarm-hook-openai.py`, Roboto TTFs for labels.
+- **Gaps:** uncommitted until PUSH; experimental JPG/PNG drafts in Cursor project `assets/` are not in git.
+
 ## 2026-11-22 — Landing reminders panel + README honesty (PLAN → REVIEW → SYNC)
 
 - **Shipped:** [`/reminders`](apps/web/app/reminders/page.tsx) page + [`SiteHeader`](apps/web/components/site-header.tsx) nav; [`RemindersPanel`](apps/web/components/reminders-panel.tsx) with copyable consumer workflow; per-repo / many-repos / vs-agent copy in [README](../README.md); `\${{` escape in [`consumer-sundown-workflow.ts`](apps/web/lib/consumer-sundown-workflow.ts). Origin story: **email**, not docs.

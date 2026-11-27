@@ -6,6 +6,8 @@ Origin: OpenAI’s **gpt-image-2** deprecation notice sat in email for weeks unn
 
 ![CLI report for gpt-image-2 deprecation](docs/assets/cli-report.svg)
 
+LinkedIn hook (calm email vs alarm mock): [`docs/assets/hook/linkedin-hook-composite.png`](docs/assets/hook/linkedin-hook-composite.png) — regenerate via [`docs/assets/hook/README.md`](docs/assets/hook/README.md).
+
 Repo: [sid-kiwilab/project-sundown](https://github.com/sid-kiwilab/project-sundown) — full spec in [docs/LIVE.md](docs/LIVE.md).
 
 ```bash
