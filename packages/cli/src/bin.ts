@@ -53,22 +53,33 @@ function shouldFail(finding: Finding, failOnDays: number): boolean {
 }
 
 async function maybeCreateIssue(report: ScanReport): Promise<void> {
-  const token = process.env.GITHUB_TOKEN;
+  const token = process.env.GITHUB_TOKEN ?? process.env.GH_TOKEN;
   const body = issueBody(report);
   if (!token) {
     console.error(
-      "Set GITHUB_TOKEN to open or update a GitHub issue, or pipe this body:\n",
+      "Set GITHUB_TOKEN or GH_TOKEN to open or update a GitHub issue. Body:\n",
     );
     console.error(body);
-    return;
+    throw new Error("GITHUB_TOKEN or GH_TOKEN is required for --issue");
   }
   const { execFile } = await import("node:child_process");
   const { promisify } = await import("node:util");
   const execFileAsync = promisify(execFile);
-  const ghEnv = { ...process.env, GITHUB_TOKEN: token, GH_PAGER: "" };
+  const ghEnv = {
+    ...process.env,
+    GITHUB_TOKEN: token,
+    GH_TOKEN: token,
+    GH_PAGER: "",
+  };
+  const ghCwd = process.env.GITHUB_WORKSPACE ?? process.cwd();
+  const repoSlug = process.env.GITHUB_REPOSITORY;
+  const ghPrefix = repoSlug ? (["-R", repoSlug] as const) : [];
 
   const runGh = async (args: string[]) => {
-    const { stdout } = await execFileAsync("gh", args, { env: ghEnv });
+    const { stdout } = await execFileAsync("gh", [...ghPrefix, ...args], {
+      env: ghEnv,
+      cwd: ghCwd,
+    });
     return stdout.trim();
   };
 
@@ -119,11 +130,14 @@ async function maybeCreateIssue(report: ScanReport): Promise<void> {
       SUNDOWN_ISSUE_LABEL,
     ]);
     console.error("Created GitHub issue via gh CLI.");
-  } catch {
+  } catch (err) {
+    const detail = err instanceof Error ? err.message : String(err);
     console.error(
-      "gh CLI failed. Install GitHub CLI and grant issues: write. Body:\n",
-      body,
+      "gh CLI failed (needs gh on PATH and issues: write).",
+      detail,
     );
+    console.error("Issue body was not upserted:\n", body);
+    throw err instanceof Error ? err : new Error(detail);
   }
 }
 

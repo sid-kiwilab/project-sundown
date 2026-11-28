@@ -28,10 +28,13 @@ runs:
     - name: Scan and upsert issue
       shell: bash
       run: |
+        set -euo pipefail
+        cd "$GITHUB_WORKSPACE"
         TOOL_ROOT="${{ github.action_path }}/../../.."
         node "$TOOL_ROOT/packages/cli/dist/bin.js" "$GITHUB_WORKSPACE" --issue
       env:
         GITHUB_TOKEN: ${{ github.token }}
+        GH_TOKEN: ${{ github.token }}
         OPENROUTER_API_KEY: ${{ inputs.openrouter-api-key }}
         OPENAI_API_KEY: ${{ inputs.openai-api-key }}
         ANTHROPIC_API_KEY: ${{ inputs.anthropic-api-key }}
