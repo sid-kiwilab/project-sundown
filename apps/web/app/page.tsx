@@ -145,7 +145,7 @@ export default function HomePage() {
 
       <p className="mt-16 text-sm text-muted">
         Private repos: run{" "}
-        <code className="text-ink/70">npm run sundown -- .</code> locally (
+        <code className="text-ink/70">npx sundown-cli .</code> locally (
         <a
           href="https://github.com/sid-venkatesh/project-sundown"
           className="text-ink/70 underline decoration-line underline-offset-2 hover:text-ink"
