@@ -20,7 +20,7 @@ Local dev: [README.md](../README.md). Session history: [JOURNAL.md](JOURNAL.md).
 | Dev (web) | **Shipped (local)** — `start.bat` or `npm run dev` → **http://localhost:3000**; paste public `github.com/owner/repo` |
 | Web (Vercel) | **Shipped** — [project-sundown-nine.vercel.app](https://project-sundown-nine.vercel.app/). Root **`apps/web`**, Framework **Next.js**, Output Directory **empty**, Build Command **empty**. [`apps/web/vercel.json`](../apps/web/vercel.json): install = monorepo `npm install` + `build:engine`. NFT includes `../../registry/**/*.json`. Git: **sid-venkatesh/project-sundown**. |
 | CLI (local) | **Shipped (workspace)** — `sundown-engine` + `sundown-cli`; `npm run build:engine && npm run build:cli` then `npm run sundown -- [path]` (reads repo-root `.env` via engine) |
-| CLI (npm) | **Unscoped** `sundown-engine` + `sundown-cli` (no `@sundown` org). Publish: `npm publish -w sundown-engine` then `-w sundown-cli`. |
+| CLI (npm) | **Shipped** — [sundown-cli@0.1.0](https://www.npmjs.com/package/sundown-cli) + [sundown-engine@0.1.0](https://www.npmjs.com/package/sundown-engine) (`sid-venkatesh`). Registry may show a short `0.0.0-stage` stub while npm finishes processing. |
 | Backend (hosted) | Scan API, credits, cache — Vercel + KV |
 | Env (hosted) | `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` (optional), `KV_*`, `ADMIN_SECRET`, `CONTACT_URL`, optional `GITHUB_TOKEN` (archived-repo limits) |
 | Env (CLI) | User’s `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` for Tier 2/3; `GITHUB_TOKEN` for `--issue` |
@@ -226,7 +226,7 @@ Same engine as web; Tier 1 offline where possible; `--fail-on-days` for CI gates
 1. **engine** — fetch + detectors + Tier 1 + tests on fixtures. **(shipped)**
 2. **CLI** — table, `--json`, `--issue`, `--fail-on-days`, terminal alarm. **(shipped, workspace only)**
 3. **Tier 2** — OpenAI + **Anthropic** pipe-table parse + batch LLM; Google, Mistral via fetch + LLM + quote gates (no structured row parser for those yet).
-4. **Action** example workflow + composite in repo **(shipped)**; npm tarball packaging **shipped**; `npm publish` still needs owner login. README GIF still pending.
+4. **Action** example workflow + composite in repo **(shipped)**; npm **0.1.0 published** 2026-11-28. README GIF still pending.
 5. **web** — landing, API, report, cache, credits, out-of-credits. **(partial: local + Vercel; `/api/scan` + alarm-first report; no KV/credits/`/r/`)**
 6. OG + copy-as-issue.
 7. **Tier 3** + demo scan aliasengine for launch.
@@ -235,7 +235,7 @@ Same engine as web; Tier 1 offline where possible; `--fail-on-days` for CI gates
 
 ## Done when
 
-- [x] **Tier 1 (local workspace):** `npm run sundown -- .` with **no** API keys prints a useful report (live npm/eol checks). `npx sundown-cli` awaits owner `npm publish`.
+- [x] **Tier 1 (local workspace):** `npm run sundown -- .` with **no** API keys prints a useful report (live npm/eol checks). `npx sundown-cli .` on npm **0.1.0**.
 - [x] **Tier 2 demo:** Vitest `packages/engine` fixture `fixtures/gpt-image-2` + mocked OpenAI deprecations table flags **gpt-image-2** → **2027-02-10**, replacement, source link (live `aliasengine` scan optional after publish).
 - [x] Old Node + deprecated npm package both show `official-data` (Vitest fixtures + mocked HTTP).
 - [ ] Credits at zero → friendly page, no stack trace (hosted).
@@ -303,7 +303,7 @@ npm run lint     # tsc --noEmit on sundown-engine and @sundown/web
 
 - [x] Initialize git + GitHub repo `sid-venkatesh/project-sundown`
 - [x] Package `sundown-cli` + `sundown-engine` for npm (registry bundled in engine tarball)
-- [ ] Owner: `npm login` in a terminal (website login is not the CLI) + `npm publish -w sundown-engine` then `-w sundown-cli`
+- [x] Owner: `npm publish` — **sundown-engine@0.1.0**, **sundown-cli@0.1.0** (2026-11-28)
 - [ ] Vercel reconnect — Root **`apps/web`**, Framework **Next.js**, Output Directory **empty**, Build Command **empty**, env from `.env.example`
 - [ ] Set `credits:remaining` + `CONTACT_URL` (when KV ships)
 - [ ] `npm run build` clean before prod (PUSH)

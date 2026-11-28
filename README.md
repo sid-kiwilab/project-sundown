@@ -27,7 +27,7 @@ npm test
 npx sundown-cli .
 ```
 
-Until 0.1.0 is on npm, use `npm run sundown -- .` from this repo.
+Published on npm as [`sundown-cli`](https://www.npmjs.com/package/sundown-cli) **0.1.0** (engine: [`sundown-engine`](https://www.npmjs.com/package/sundown-engine)). Developing in this repo: `npm run sundown -- .`
 
 Reports show **checked N of M** — “checked” means we queried a named source for that row (no notice on that page still counts). npm/PyPI pins with no deprecation flag show **`healthy`**, not “unverified”. The web UI leads with expiring rows; the CLI prints an **ALARMS** section first. API host rows stay unchecked.
 

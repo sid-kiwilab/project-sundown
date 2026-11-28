@@ -4,6 +4,12 @@ Newest first. Stable ops + product spec: [LIVE.md](LIVE.md).
 
 ---
 
+## 2026-11-28 — npm 0.1.0 published
+
+- **Shipped:** `npm publish` — **sundown-engine@0.1.0**, **sundown-cli@0.1.0** under **sid-venkatesh** (2FA web auth). npm may list a brief `0.0.0-stage` placeholder until processing finishes.
+- **Try:** `npx sundown-cli@0.1.0 .` in any repo (not only this monorepo).
+- **Gaps:** README GIF; confirm npm package pages show 0.1.0 not stub only.
+
 ## 2026-11-28 — npm packaging for sundown-cli (SYNC)
 
 - **Shipped:** Engine copies `registry/*.json` into `packages/engine/registry` on build; tarball `files` include that folder. CLI resolves registry via `resolveSundownRegistryPath` (monorepo walk + engine-adjacent fallback) so `npx` works without this git checkout. Published names: unscoped **`sundown-engine`** + **`sundown-cli`** (npm user `sid-venkatesh`, no org).
