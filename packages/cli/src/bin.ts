@@ -84,6 +84,20 @@ async function maybeCreateIssue(report: ScanReport): Promise<void> {
   };
 
   try {
+    try {
+      await runGh([
+        "label",
+        "create",
+        SUNDOWN_ISSUE_LABEL,
+        "--color",
+        "d73a4a",
+        "--description",
+        "Sundown weekly dependency expiry alarm",
+      ]);
+    } catch {
+      // Label already exists.
+    }
+
     const listedRaw = await runGh([
       "issue",
       "list",
