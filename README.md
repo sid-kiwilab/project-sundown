@@ -52,7 +52,7 @@ Weekly scans with **no accounts**. In each repo where you add the workflow, Sund
 
 - **One repo:** drop the file below into **that** repo as `.github/workflows/sundown.yml` and push. This site does not enable reminders for you.
 - **Many repos:** repeat per repo (or use a GitHub org **reusable workflow**). There is no Sundown dashboard to “select all repos.”
-- **Local once:** `npm run sundown -- . --issue` with `GITHUB_TOKEN` and [GitHub CLI](https://cli.github.com/) (`issues: write`).
+- **Local once:** `npx sundown-cli . --issue` (or `npm run sundown -- . --issue` in this repo) with `GITHUB_TOKEN` or `GH_TOKEN`, plus [GitHub CLI](https://cli.github.com/) (`issues: write`). **`0.1.2`** on `main` fixes CI-style upsert (label + fail loud); publish CLI after bump if you rely on npm not the Action.
 - **Why not just an agent?** Sundown re-runs the same Tier 1/2 checks (npm, EOL, official pages with quote rules) every week. Agents are great for pasting this YAML; they are not a substitute for a scheduled, sourced report.
 
 Optional repo secret `OPENROUTER_API_KEY` (or OpenAI/Anthropic via the action inputs) enables model sunset rows (**burns credits each run**). Without API keys, npm/PyPI/runtime EOL alarms still run (Tier 1).

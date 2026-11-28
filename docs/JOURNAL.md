@@ -4,17 +4,22 @@ Newest first. Stable ops + product spec: [LIVE.md](LIVE.md).
 
 ---
 
+## 2026-11-29 — Launch pass (Action issue upsert, web deps, npm 0.1.2 pending)
+
+- **Shipped:** Weekly Action passes `GH_TOKEN`, ensures `sundown` label, fails job on `--issue` error; issue [#1](https://github.com/sid-venkatesh/project-sundown/issues/1) upserts on `main`. npm **0.1.1** on registry; workspace CLI **0.1.2** (`--issue` parity) until next `npm publish -w sundown-cli`. Web: `next` / `tar` bumped; landing footer `npx sundown-cli .`. Optional `scripts/schedule-linkedin-zernio.mjs` + `.env.example` `ZERNIO_API_KEY`.
+- **Key files:** `packages/cli/src/bin.ts`, `.github/actions/sundown/action.yml`, `apps/web/package.json`, `apps/web/app/page.tsx`, `docs/LIVE.md`.
+- **Gaps:** owner `npm publish` **sundown-cli@0.1.2**; README GIF; hosted KV/credits; Tier 3; LinkedIn first comment still manual after Zernio post.
+
 ## 2026-11-28 — Harden scans (fixtures/tests + registry + issue template)
 
 - **Shipped:** `walk.ts` skips `*.test.ts(x)`, `*.spec.ts(x)`, and `**/fixtures/**` unless `SUNDOWN_INCLUDE_TESTS=1`; monorepo self-scan test; Cohere + Groq in `sources.json` / `models.json` / `provider-map`; Docker `eol.json` aliases (temurin, corretto, rust); `.github/ISSUE_TEMPLATE/suggest-source.yml`.
 - **Key files:** `packages/engine/src/walk.ts`, `registry/*.json`, `README.md`, `.env.example`.
 - **Gaps:** Tier 3 search still not built.
 
-## 2026-11-28 — npm 0.1.0 published
+## 2026-11-28 — npm 0.1.0 → 0.1.1 published
 
-- **Shipped:** `npm publish` — **sundown-engine@0.1.0**, **sundown-cli@0.1.0** under **sid-venkatesh** (2FA web auth). npm may list a brief `0.0.0-stage` placeholder until processing finishes.
-- **Try:** `npx sundown-cli@0.1.0 .` in any repo (not only this monorepo).
-- **Gaps:** README GIF; confirm npm package pages show 0.1.0 not stub only.
+- **Shipped:** **sundown-engine@0.1.1**, **sundown-cli@0.1.1** on npm (`sid-venkatesh`). Registry bundled in engine tarball; `npx sundown-cli@latest .` works outside monorepo.
+- **Gaps:** superseded by **0.1.2** CLI bump on `main` (issue upsert); publish when ready.
 
 ## 2026-11-28 — npm packaging for sundown-cli (SYNC)
 

@@ -1,6 +1,6 @@
 {
   "name": "sundown-cli",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Expiry-date audit for a repo — models, APIs, packages, runtimes, SaaS.",
   "license": "MIT",
   "author": "Sid Venkatesh",
