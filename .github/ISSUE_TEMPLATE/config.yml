@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: npm sundown-cli
+    url: https://www.npmjs.com/package/sundown-cli
+    about: Install and scan a local repo with npx.
+  - name: Live demo
+    url: https://project-sundown-nine.vercel.app/
+    about: Paste a public GitHub URL (no account).

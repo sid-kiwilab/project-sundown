@@ -40,6 +40,11 @@
     "ruby": "ruby",
     "php": "php",
     "golang": "go",
-    "openjdk": "java"
+    "openjdk": "java",
+    "eclipse-temurin": "java",
+    "temurin": "java",
+    "amazoncorretto": "java",
+    "corretto": "java",
+    "rust": "rust"
   }
 }

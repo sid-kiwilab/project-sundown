@@ -276,6 +276,7 @@ Same engine as web; Tier 1 offline where possible; `--fail-on-days` for CI gates
 | `SUNDOWN_LLM_MODEL` | No | CLI / web | Optional model slug (default `openai/gpt-4o-mini` on OpenRouter) |
 | `REGISTRY_PATH` | No | CLI / web | Absolute path to `registry/` if auto-detect fails (Vercel) |
 | `SUNDOWN_MONOREPO_ROOT` | No | CLI / web | Repo root (parent of `registry/`) if walk fails |
+| `SUNDOWN_INCLUDE_TESTS` | No | CLI / web | Set `1` to walk `*.test.ts(x)`, `*.spec.ts(x)`, and `**/fixtures/**` (default: skip) |
 | `NEXT_PUBLIC_CONTACT_URL` | No | Web | “Interested in monitoring?” CTA on landing |
 
 ---

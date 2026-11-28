@@ -15,6 +15,11 @@ const registryPath = path.resolve(
   "../../../registry",
 );
 
+const monorepoRoot = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "../../..",
+);
+
 describe("scan()", () => {
   it("fixture old-node resolves Node EOL", async () => {
     const report = await scan(path.join(fixturesDir, "old-node"), {
@@ -112,5 +117,21 @@ describe("scan()", () => {
     expect(model!.replacement).toBe("gpt-image-2.6-sunburst");
     expect(model!.sourceUrl).toContain("deprecations");
     expect(model!.checked).toBe(true);
+  });
+
+  it("monorepo root scan omits test-only and fixture-only noise by default", async () => {
+    const report = await scan(monorepoRoot, {
+      registryPath,
+      fetchImpl: createMockFetch(),
+      tier2Enabled: false,
+    });
+    const names = report.findings.map((f) => `${f.kind}:${f.name}`);
+    expect(names.some((n) => n.includes("gpt-ghost"))).toBe(false);
+    expect(report.findings.some((f) => f.name === "left-pad")).toBe(false);
+    expect(
+      report.findings.some(
+        (f) => f.kind === "runtime" && f.name === "node" && f.version === "14",
+      ),
+    ).toBe(false);
   });
 });

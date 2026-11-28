@@ -11,6 +11,10 @@ export function inferProvider(finding: Finding): string | null {
     if (n.startsWith("gemini")) return "google";
     if (n.startsWith("mistral") || n.startsWith("codestral")) return "mistral";
     if (n.startsWith("llama")) return "meta";
+    if (n.startsWith("command") || n.startsWith("embed-") || n.startsWith("rerank-")) {
+      return "cohere";
+    }
+    if (n.startsWith("mixtral") || n.startsWith("gemma2")) return "groq";
   }
 
   if (finding.kind === "api") {
@@ -19,6 +23,8 @@ export function inferProvider(finding: Finding): string | null {
     if (n.includes("google") || n.includes("generativelanguage")) {
       return "google";
     }
+    if (n.includes("cohere")) return "cohere";
+    if (n.includes("groq")) return "groq";
   }
 
   return null;

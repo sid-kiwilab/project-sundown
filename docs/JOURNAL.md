@@ -4,6 +4,12 @@ Newest first. Stable ops + product spec: [LIVE.md](LIVE.md).
 
 ---
 
+## 2026-11-28 — Harden scans (fixtures/tests + registry + issue template)
+
+- **Shipped:** `walk.ts` skips `*.test.ts(x)`, `*.spec.ts(x)`, and `**/fixtures/**` unless `SUNDOWN_INCLUDE_TESTS=1`; monorepo self-scan test; Cohere + Groq in `sources.json` / `models.json` / `provider-map`; Docker `eol.json` aliases (temurin, corretto, rust); `.github/ISSUE_TEMPLATE/suggest-source.yml`.
+- **Key files:** `packages/engine/src/walk.ts`, `registry/*.json`, `README.md`, `.env.example`.
+- **Gaps:** Tier 3 search still not built.
+
 ## 2026-11-28 — npm 0.1.0 published
 
 - **Shipped:** `npm publish` — **sundown-engine@0.1.0**, **sundown-cli@0.1.0** under **sid-venkatesh** (2FA web auth). npm may list a brief `0.0.0-stage` placeholder until processing finishes.

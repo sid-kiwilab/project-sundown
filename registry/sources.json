@@ -28,6 +28,18 @@
       "urls": [
         "https://docs.mistral.ai/getting-started/changelog/"
       ]
+    },
+    {
+      "provider": "cohere",
+      "urls": [
+        "https://docs.cohere.com/changelog"
+      ]
+    },
+    {
+      "provider": "groq",
+      "urls": [
+        "https://console.groq.com/docs/changelog"
+      ]
     }
   ]
 }

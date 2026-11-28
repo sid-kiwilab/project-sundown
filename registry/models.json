@@ -20,6 +20,14 @@
     {
       "provider": "mistral",
       "patterns": ["mistral-[a-z0-9.-]+", "codestral-[a-z0-9.-]+"]
+    },
+    {
+      "provider": "cohere",
+      "patterns": ["command-[a-z0-9.-]+", "embed-[a-z0-9.-]+", "rerank-[a-z0-9.-]+"]
+    },
+    {
+      "provider": "groq",
+      "patterns": ["llama-3\\.?[0-9a-z.-]*", "mixtral-[a-z0-9.-]+", "gemma2-[a-z0-9.-]+"]
     }
   ]
 }

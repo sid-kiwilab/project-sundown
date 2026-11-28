@@ -1,6 +1,6 @@
 {
   "name": "sundown-engine",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Sundown scan engine — expiry audit for models, APIs, packages, runtimes, SaaS.",
   "license": "MIT",
   "author": "Sid Venkatesh",

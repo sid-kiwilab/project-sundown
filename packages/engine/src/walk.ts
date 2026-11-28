@@ -16,6 +16,20 @@ const MAX_FILE_BYTES = 512 * 1024;
 
 const LOCKFILE_SKIP_IF_OVER = 2 * 1024 * 1024;
 
+/** When unset/false, skip test files and fixture trees (not the scan root itself). */
+export function shouldIncludeTestsInWalk(): boolean {
+  const v = process.env.SUNDOWN_INCLUDE_TESTS?.trim().toLowerCase();
+  return v === "1" || v === "true" || v === "yes";
+}
+
+const TEST_FIXTURE_GLOB_IGNORE = [
+  "**/*.test.ts",
+  "**/*.test.tsx",
+  "**/*.spec.ts",
+  "**/*.spec.tsx",
+  "**/fixtures/**",
+];
+
 export type WalkedFile = {
   absolutePath: string;
   relativePath: string;
@@ -24,20 +38,25 @@ export type WalkedFile = {
 
 export async function walkRepo(root: string): Promise<WalkedFile[]> {
   const normalized = path.resolve(root);
+  const ignore = [
+    "**/node_modules/**",
+    "**/.git/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/.next/**",
+    "**/registry/**",
+    "**/harness/**",
+  ];
+  if (!shouldIncludeTestsInWalk()) {
+    ignore.push(...TEST_FIXTURE_GLOB_IGNORE);
+  }
+
   const entries = await fg("**/*", {
     cwd: normalized,
     absolute: true,
     dot: true,
     onlyFiles: true,
-    ignore: [
-      "**/node_modules/**",
-      "**/.git/**",
-      "**/dist/**",
-      "**/build/**",
-      "**/.next/**",
-      "**/registry/**",
-      "**/harness/**",
-    ],
+    ignore,
   });
 
   const out: WalkedFile[] = [];

@@ -1,0 +1,38 @@
+name: Suggest an official source
+description: Add a vendor to registry/sources.json or registry/saas.json (no web search — we need a stable official URL).
+title: "Source: <vendor name>"
+labels: ["registry"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Sundown only checks **named official URLs** (plus npm, PyPI, endoflife.date). We do not use web search.
+        Fastest path: open a PR editing `registry/sources.json`, `registry/saas.json`, or `registry/eol.json`.
+  - type: input
+    id: vendor
+    attributes:
+      label: Vendor / product name
+      placeholder: e.g. Groq, Stripe, eclipse-temurin Docker image
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Official deprecation, changelog, or EOL page URL
+      placeholder: https://...
+    validations:
+      required: true
+  - type: input
+    id: example
+    attributes:
+      label: Example row from a scan (name + kind)
+      placeholder: e.g. model gpt-image-2 or package left-pad
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Why this URL is the right source
+      placeholder: Link to vendor docs section; no blog posts unless vendor-official.
+    validations:
+      required: false
